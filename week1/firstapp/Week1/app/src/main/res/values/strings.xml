@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Week1</string>
+    <string name="main_screen"></string>
+    <string name="throw_coin">Flip!</string>
+    <string name="title">Press the button to flip the coin</string>
+    <string name="action_settings">Settings</string>
+    <string name="outcome"></string>
+</resources>
