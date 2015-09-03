@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Excercise 11 %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+1a: done
+
+
+1b: line 68, "System.out.println(b.numberOfKills);", won't work. numberOfKills is a property of eagles. We're asking this information about a bird, which is a parent of eagle. Eagle inherites all the properties of bird, but not vice versa. Therefore, this is not a known property when speaking of birds. 
+The same goes for "b.attack()" at line 70.
+The same goed for "a.fly()" at line 62. (this is a bird property, whilst we're talking about animals. Animals (parents) don't inherit this from their child (bird))
+
+Furthermore, line 73, printing the number of kills, wouldn't succeed either. This information is private within the class. This means that it is available within itself (for developing purposes), but not for outsiders to view/change. This property would have to be made "public", or the eagle class should include something of a getKills() function.
+
+
+1c: done
+
+
+1d: when creating the Bird object, the value of NumberOfLeggs is set to 2. Most animals have 4 legs, but this specific child (bird) has 2 of them, so the value is child. Since Eagle inherits everything from bird, and the value remains unchanged within the class, eagles are said to have 2 legs
+
+
+1e: a.fly() is not known by the program. By converting the bird to an animal, it loses all the additional properties that the child has and the parent doesn't (such as flying). Otherwise, the conversion would not be possible, since animal classes contain no information about these additional properties.
+
+
+1f: on line 27, incompatible types: Animal cannot be converted to Bird. These lines state that the animal object a should be converted into a bird object, and then assigned to b. A child can be converted to its parents, because all of the parent's properties are also inside the child. The only differences may be the addition of properties. However, bird has additional properties, such as "fly", that animals don't have and therefore can't take over.
+
+------------------------------------
+
+2abcdefg: see StarWars.java
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Rest of the ex. %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As an AI-student I was allowed to try how lesson 11 worked out, and continue backwards if I still encountered troubles. However, I don't think I encountered any troubles doing these exercises.
