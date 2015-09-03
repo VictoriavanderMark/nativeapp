@@ -1,6 +1,7 @@
 package com.example.victoria.week1;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,14 +15,16 @@ import java.util.Random;
 
 public class MainScreen extends Activity {
 
-    private Button coinThrowButton;
+    private Button againButton;
+    private Button throwButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-        coinThrowButton = (Button) findViewById(R.id.throw_button);
+        againButton = (Button) findViewById(R.id.again_button);
+        againButton.setVisibility(View.INVISIBLE);
+        throwButton = (Button) findViewById(R.id.throw_button);
     }
 
     @Override
@@ -68,14 +71,23 @@ public class MainScreen extends Activity {
             i.setImageResource(R.drawable.tail);
         }
 
-        TextView t= new TextView(this);
-        t = (TextView) findViewById(R.id.outcomeText);
-        t.setText(side);
+        againButton.setVisibility(View.VISIBLE);
+        throwButton.setClickable(false);
+        throwButton.getBackground().setAlpha(128);
+        throwButton.setTextColor(Color.parseColor("#585858"));
+
+    }
+
+    public void restore(View view) {
 
 
-
-
-
+        ImageView i = new ImageView(this);
+        i = (ImageView) findViewById(R.id.imageView);
+        i.setImageResource(0);
+        againButton.setVisibility(View.INVISIBLE);
+        throwButton.setClickable(true);
+        throwButton.getBackground().setAlpha(255);
+        throwButton.setTextColor(Color.parseColor("#000000"));
 
     }
 }

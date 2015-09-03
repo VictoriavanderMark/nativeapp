@@ -11,7 +11,8 @@
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="28dp"
+        android:textSize="9pt"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -23,16 +24,6 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/outcome"
-        android:id="@+id/outcomeText"
-        android:layout_below="@+id/imageView"
-        android:layout_marginTop="-55dp"
-        android:layout_centerHorizontal="true" />
-
 
     <ImageView
         android:layout_width="wrap_content"
@@ -40,8 +31,18 @@
         android:id="@+id/imageView"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/throw_button"
-        android:layout_marginTop="-15dp"
+        android:layout_marginTop="-55dp"
         android:layout_centerHorizontal="true" />
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/again"
+        android:id="@+id/again_button"
+        android:layout_marginTop="-55dp"
+        android:onClick="restore"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
