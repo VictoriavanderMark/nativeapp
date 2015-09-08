@@ -14,85 +14,105 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/UpLe"
         android:layout_alignTop="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="22dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/UpCe"
         android:layout_alignTop="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="22dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/UpRe"
+        android:src="@drawable/base"
+        android:background="@null"
+        android:id="@+id/UpRi"
         android:layout_alignTop="@+id/grid"
         android:layout_alignRight="@+id/grid"
         android:layout_marginRight="9dp"
         android:layout_marginTop="22dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/CeLe"
         android:layout_alignTop="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="109dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/CeCe"
         android:layout_alignTop="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="109dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/CeRe"
+        android:src="@drawable/base"
+        android:background="@null"
+        android:id="@+id/CeRi"
         android:layout_alignTop="@+id/grid"
         android:layout_alignRight="@+id/grid"
         android:layout_marginRight="9dp"
         android:layout_marginTop="109dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/DoLe"
         android:layout_alignBottom="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="9dp"
         android:layout_marginBottom="16dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:id="@+id/DoCe"
         android:layout_alignBottom="@+id/grid"
         android:layout_alignLeft="@+id/grid"
         android:layout_marginLeft="100dp"
         android:layout_marginBottom="16dp"/>
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
+        android:src="@drawable/base"
+        android:background="@null"
         android:layout_height="wrap_content"
-        android:id="@+id/DoRe"
+        android:id="@+id/DoRi"
         android:layout_alignBottom="@+id/grid"
         android:layout_alignRight="@+id/grid"
         android:layout_marginRight="9dp"
         android:layout_marginBottom="16dp"/>
+
+
 
 </RelativeLayout>
