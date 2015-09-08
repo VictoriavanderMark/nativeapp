@@ -26,7 +26,7 @@ public class MainActivity extends Activity{
     public Tile DoCe;
     public Tile DoRi;
     public int moves;
-
+    public boolean won;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
 
         moves = 0;
+        won = false;
         UpLe = new Tile((ImageButton) findViewById(R.id.UpLe));
         UpCe = new Tile((ImageButton) findViewById(R.id.UpCe));
         UpRi = new Tile((ImageButton) findViewById(R.id.UpRi));
@@ -47,7 +48,7 @@ public class MainActivity extends Activity{
         UpLe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UpLe.isSet()) {
+                if(!UpLe.isSet() & !won) {
                     int image = pickImage();
                     UpLe.setImage(image);
                     hasWon();
@@ -58,7 +59,7 @@ public class MainActivity extends Activity{
         UpCe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UpCe.isSet()) {
+                if(!UpCe.isSet() & !won) {
                     int image = pickImage();
                     UpCe.setImage(image);
                     hasWon();
@@ -69,7 +70,7 @@ public class MainActivity extends Activity{
         UpRi.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UpRi.isSet()) {
+                if(!UpRi.isSet() & !won) {
                     int image = pickImage();
                     UpRi.setImage(image);
                     hasWon();
@@ -80,7 +81,7 @@ public class MainActivity extends Activity{
         CeLe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!CeLe.isSet()) {
+                if(!CeLe.isSet() & !won) {
                     int image = pickImage();
                     CeLe.setImage(image);
                     hasWon();
@@ -91,7 +92,7 @@ public class MainActivity extends Activity{
         CeCe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!CeCe.isSet()) {
+                if(!CeCe.isSet() & !won) {
                     int image = pickImage();
                     CeCe.setImage(image);
                     hasWon();
@@ -102,7 +103,7 @@ public class MainActivity extends Activity{
         CeRi.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!CeRi.isSet()) {
+                if(!CeRi.isSet() & !won) {
                     int image = pickImage();
                     CeRi.setImage(image);
                     hasWon();
@@ -113,7 +114,7 @@ public class MainActivity extends Activity{
         DoLe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!DoLe.isSet()) {
+                if(!DoLe.isSet() & !won) {
                     int image = pickImage();
                     DoLe.setImage(image);
                     hasWon();
@@ -124,7 +125,7 @@ public class MainActivity extends Activity{
         DoCe.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!DoCe.isSet()) {
+                if(!DoCe.isSet() & !won) {
                     int image = pickImage();
                     DoCe.setImage(image);
                     hasWon();
@@ -135,7 +136,7 @@ public class MainActivity extends Activity{
         DoRi.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!DoRi.isSet()) {
+                if(!DoRi.isSet() & !won) {
                     int image = pickImage();
                     DoRi.setImage(image);
                     hasWon();
@@ -188,10 +189,10 @@ public class MainActivity extends Activity{
 
     public void hasWon() {
         if(checkWon()) {
-            System.out.println("WONNN");
             TextView victory =(TextView)findViewById(R.id.victory);
             String player = getPlayer();
             victory.setText("PLAYER " + player + " WON!");
+            won = true;
         }
     }
 

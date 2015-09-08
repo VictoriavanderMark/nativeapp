@@ -4,5 +4,6 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+
     <color name="gray">#6A6666</color>
 </resources>

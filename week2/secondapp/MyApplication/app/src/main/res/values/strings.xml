@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Week2</string>
+    <string name="app_name">Tic Tac Toe</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="victory"></string>
+    <string name="welcome">Tap to play</string>
 </resources>
