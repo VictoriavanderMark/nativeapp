@@ -113,6 +113,16 @@
         android:layout_marginRight="9dp"
         android:layout_marginBottom="16dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/victory"
+        android:layout_below="@+id/grid"
+        android:layout_marginTop="36dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="9pt"
+        android:textColor="@color/gray"/>
 
 
 </RelativeLayout>

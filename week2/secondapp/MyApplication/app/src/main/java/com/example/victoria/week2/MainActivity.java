@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.view.View.OnTouchListener;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity{
@@ -188,6 +189,17 @@ public class MainActivity extends Activity{
     public void hasWon() {
         if(checkWon()) {
             System.out.println("WONNN");
+            TextView victory =(TextView)findViewById(R.id.victory);
+            String player = getPlayer();
+            victory.setText("PLAYER " + player + " WON!");
+        }
+    }
+
+    public String getPlayer() {
+        if(moves % 2 == 0) {
+            return "BLUE";
+        } else {
+            return "RED";
         }
     }
 
