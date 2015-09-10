@@ -34,4 +34,9 @@ public class Tile {
         tilePlace.setImageResource(image);
         this.set = true;
     }
+
+    public void reset(int image) {
+        this.setImage(image);
+        this.set = false;
+    }
 }

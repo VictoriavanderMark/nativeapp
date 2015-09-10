@@ -35,6 +35,7 @@ public class MainActivity extends Activity{
 
         moves = 0;
         won = false;
+        ImageButton fresh = (ImageButton) findViewById(R.id.refresh);
         UpLe = new Tile((ImageButton) findViewById(R.id.UpLe));
         UpCe = new Tile((ImageButton) findViewById(R.id.UpCe));
         UpRi = new Tile((ImageButton) findViewById(R.id.UpRi));
@@ -144,6 +145,15 @@ public class MainActivity extends Activity{
             }
         });
 
+        fresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetGame();
+            }
+        });
+
+
+
     }
 
     @Override
@@ -187,6 +197,23 @@ public class MainActivity extends Activity{
     }
 
 
+    public void resetGame() {
+        won = false;
+        moves = 0;
+        int image = R.drawable.base;
+        UpLe.reset(image);
+        UpCe.reset(image);
+        UpRi.reset(image);
+        CeLe.reset(image);
+        CeCe.reset(image);
+        CeRi.reset(image);
+        DoLe.reset(image);
+        DoCe.reset(image);
+        DoRi.reset(image);
+        TextView victory =(TextView)findViewById(R.id.victory);
+        victory.setText("");
+    }
+
     public void hasWon() {
         if(checkWon()) {
             TextView victory =(TextView)findViewById(R.id.victory);
@@ -208,6 +235,12 @@ public class MainActivity extends Activity{
         int ul = UpLe.getImage();
         int uc = UpCe.getImage();
         int ur = UpRi.getImage();
+        int cl = CeLe.getImage();
+        int cc = CeCe.getImage();
+        int cr = CeRi.getImage();
+        int dl = DoLe.getImage();
+        int dc = DoCe.getImage();
+        int dr = DoRi.getImage();
         boolean ulset = UpLe.isSet();
         boolean ucset = UpCe.isSet();
         boolean urset = UpRi.isSet();
@@ -222,28 +255,28 @@ public class MainActivity extends Activity{
         if(ulset & ucset & urset & ul == uc && uc == ur ){
             return true;
         }
-        else if(clset & ccset & crset & CeLe.getImage() == CeCe.getImage() && CeCe.getImage() == CeRi.getImage() ){
+        else if(clset & ccset & crset & cl == cc && cc == cr ){
             return true;
         }
-        else if(dlset & dcset & drset & DoLe.getImage() == DoCe.getImage() && DoCe.getImage() == DoRi.getImage() ){
-            return true;
-        }
-
-        else if(ulset & clset & dlset & UpLe.getImage() == CeLe.getImage() && CeLe.getImage() == DoLe.getImage())  {
-            return true;
-        }
-        else if(ucset & ccset & dcset & UpCe.getImage() == CeCe.getImage() && CeCe.getImage() == DoCe.getImage())  {
-            return true;
-        }
-        else if(urset & crset & drset & UpRi.getImage() == CeRi.getImage() && CeRi.getImage() == DoRi.getImage())  {
+        else if(dlset & dcset & drset & dl == dc && dc == dr ){
             return true;
         }
 
-        else if(ulset & ccset & drset & UpLe.getImage() == CeCe.getImage() && CeCe.getImage() == DoRi.getImage()) {
+        else if(ulset & clset & dlset & ul == cl && cl == dl)  {
+            return true;
+        }
+        else if(ucset & ccset & dcset & uc == cc && cc == dc)  {
+            return true;
+        }
+        else if(urset & crset & drset & ur == cr && cr == dr)  {
             return true;
         }
 
-        else if(urset & ccset & dlset & UpRi.getImage() == CeCe.getImage() && CeCe.getImage() == DoLe.getImage()) {
+        else if(ulset & ccset & drset & ul == cc && cc == dr) {
+            return true;
+        }
+
+        else if(urset & ccset & dlset & ur == cc && cc == dl) {
             return true;
         }
         else {
