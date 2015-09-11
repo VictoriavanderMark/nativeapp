@@ -1,13 +1,15 @@
+/* App: Tic Tac Toe game
+*  Author: Victoria van der MArk
+*  Date: 11 septemeber 2015*/
+
 package com.example.victoria.week2;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -175,6 +177,9 @@ public class MainActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
+    /* Chooses an image, based on whose turn it is. When the amount
+     * of moves is even, it's team cross' turn, otherwise team
+      * nought*/
     public int pickImage() {
         int image;
         System.out.println(moves);
@@ -184,21 +189,23 @@ public class MainActivity extends Activity{
             image = R.drawable.nodge;
         }
         adaptMoves();
-        System.out.println(moves);
         return image;
     }
 
+    /* Update the amount of moves made in the game*/
     public void adaptMoves() {
         moves++;
-
     }
 
+    /* When it's a tie, a certain text is shown and the game ends*/
     public void tie() {
         TextView victory =(TextView)findViewById(R.id.victory);
         victory.setText("IT'S A TIE!");
         won = true;
     }
 
+    /* When the rest button is clicked, the game resets to its original
+    * state. */
     public void resetGame() {
         won = false;
         moves = 0;
@@ -216,6 +223,8 @@ public class MainActivity extends Activity{
         victory.setText("");
     }
 
+    /* After every move, it's checked whether someone won or the game
+    * ended in a tie.*/
     public void hasWon() {
          if(checkWon()) {
             TextView victory =(TextView)findViewById(R.id.victory);
@@ -227,6 +236,8 @@ public class MainActivity extends Activity{
         }
     }
 
+    /* Retrieves the color of the player, based on the amount of moves
+    * made in the game*/
     public String getPlayer() {
         if(moves % 2 == 0) {
             return "BLUE";
@@ -235,6 +246,7 @@ public class MainActivity extends Activity{
         }
     }
 
+    /* Checks if someone won*/
     public boolean checkWon(){
         int ul = UpLe.getImage();
         int uc = UpCe.getImage();
