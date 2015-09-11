@@ -52,9 +52,7 @@
             android:src="@drawable/base"
             android:background="@null"
             android:id="@+id/UpLe"
-            android:layout_margin="10dp"
-
-            />
+            android:layout_margin="10dp"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -62,9 +60,7 @@
             android:src="@drawable/base"
             android:background="@null"
             android:id="@+id/UpCe"
-            android:layout_margin="10dp"
-
-            />
+            android:layout_margin="10dp"/>
 
         <ImageButton
             android:layout_width="wrap_content"

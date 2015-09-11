@@ -5,17 +5,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.view.View.OnTouchListener;
 import android.widget.TextView;
 
 
 public class MainActivity extends Activity{
 
-    public ImageView Grid;
     public Tile UpLe;
     public Tile UpCe;
     public Tile UpRi;
@@ -51,7 +48,7 @@ public class MainActivity extends Activity{
             public void onClick(View v) {
                 if(!UpLe.isSet() & !won) {
                     int image = pickImage();
-                    UpLe.setImage(image);
+                     UpLe.setImage(image);
                     hasWon();
                 }
             }
@@ -196,6 +193,11 @@ public class MainActivity extends Activity{
 
     }
 
+    public void tie() {
+        TextView victory =(TextView)findViewById(R.id.victory);
+        victory.setText("IT'S A TIE!");
+        won = true;
+    }
 
     public void resetGame() {
         won = false;
@@ -215,11 +217,13 @@ public class MainActivity extends Activity{
     }
 
     public void hasWon() {
-        if(checkWon()) {
+         if(checkWon()) {
             TextView victory =(TextView)findViewById(R.id.victory);
             String player = getPlayer();
             victory.setText("PLAYER " + player + " WON!");
             won = true;
+        } else if(moves == 9) {
+            tie();
         }
     }
 
