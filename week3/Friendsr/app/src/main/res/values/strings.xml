@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Friendsr</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="joey">Joey</string>
+    <string name="chandler">Chandler </string>
+    <string name="phoebe">Phoebe </string>
+    <string name="monica">Monica </string>
+    <string name="ross">Ross </string>
+    <string name="rachel">Rachel </string>
+    <string name="enter_name_text_view">Enter the character\'s new name</string>
+    <string name="rate_submit">Submit</string>
+    <string name="welcome">Pick one to change its name</string>
+    <string name="chandler_description">chandler\'s picture</string>
+    <string name="joey_description">joey\'s picture</string>
+    <string name="monica_description">monica\'s picture</string>
+    <string name="phoebe_description">phoebe\'s picture</string>
+    <string name="rachel_description">rachel\'s picture</string>
+    <string name="ross_description">ross\' picture</string>
+</resources>
