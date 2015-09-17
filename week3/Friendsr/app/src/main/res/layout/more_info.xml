@@ -10,10 +10,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enter_name_text_view"/>
+        android:text="@string/enter_name_text_view"
+        android:textSize="8pt"/>
 
     <EditText
-        android:layout_width="185dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/name_edit_text"
         android:orientation="horizontal"
