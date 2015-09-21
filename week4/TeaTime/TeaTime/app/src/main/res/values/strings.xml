@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TeaTime</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_tea"><b>Enter a new tea:</b></string>
+    <string name="create_tea">Create</string>
+    <string name="cancel_tea">Cancel</string>
+    <string-array name="array">
+
+    </string-array>
+</resources>
