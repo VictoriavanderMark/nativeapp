@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -33,7 +38,7 @@ public class MainActivity extends Activity {
 
     private ArrayList<String> teas = new ArrayList<String>();
     private ArrayAdapter<String> teaAdapter;
-    private int selected; //TODO: array selected
+    private ArrayList<String> selected;
     ImageButton delete;
 
     @Override
@@ -41,7 +46,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ListView teaView = (ListView) findViewById(R.id.listview);
-        selected = -1;
+        selected = new ArrayList<String>();
         readTeas();
 
 
@@ -59,8 +64,27 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
 
-                if(selected == pos) {
+                if (selected.contains(teas.get(pos))) {
                     unselectTea(pos, teaView);
+                } else {
+                    if (selected.size()>0){
+                        ArrayList<String> tempList = new ArrayList<String>();
+                        for(String s:selected){
+                            tempList.add(s);
+                        }
+                        for(String s:tempList){
+
+                            unselectTea(teas.indexOf(s), teaView);
+                        }
+                    } else {
+                        System.out.println("HIER GA IK OP KLIKKEN WOEEH");
+                        Intent showInfo = new Intent(view.getContext(), MoreInfo.class);
+                        final int result = 1;
+
+                        String type = teas.get(pos);
+                        showInfo.putExtra("Type", type);
+                        startActivity(showInfo);
+                    }
                 }
             }
         });
@@ -89,8 +113,8 @@ public class MainActivity extends Activity {
     }
 
     public void selectTea(int pos, ListView teaView) {
-        selected = pos;
-        teaView.getChildAt(pos).setBackgroundColor(Color.rgb(189,189,189));
+        selected.add(teas.get(pos));
+        teaView.getChildAt(pos).setBackgroundColor(Color.rgb(189, 189, 189));
 
         delete = (ImageButton) findViewById(R.id.delete);
         delete.setVisibility(View.VISIBLE);
@@ -101,10 +125,12 @@ public class MainActivity extends Activity {
 
 
     public void unselectTea(int pos, ListView teaView){
-        selected = -1;
+        selected.remove(teas.get(pos));
         teaView.getChildAt(pos).setBackgroundColor(Color.TRANSPARENT);
         delete = (ImageButton) findViewById(R.id.delete);
-        delete.setVisibility(View.INVISIBLE);
+        if(selected.size()==0) {
+            delete.setVisibility(View.INVISIBLE);
+        }
 
 
     }
@@ -165,7 +191,6 @@ public class MainActivity extends Activity {
 
         builder .setView(input)
                 .setMessage(R.string.enter_tea)
-
                 .setPositiveButton(R.string.create_tea, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -177,19 +202,23 @@ public class MainActivity extends Activity {
                 .setNegativeButton(R.string.cancel_tea, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
 
 
         builder.show();
 
+
     }
 
     public void removeTea(View v) {
-        teas.remove(selected);
+        System.out.println("HALLOOOO");
+        for(String s:selected) {
+            System.out.println("DEZE ZIJN SELECTED" + s);
+            teas.remove(s);
+        }
         updateTeas();
-        selected = -1;
+        selected = new ArrayList<String>();
         delete = (ImageButton) findViewById(R.id.delete);
         delete.setVisibility(View.INVISIBLE);
 
