@@ -22,7 +22,7 @@ Features:
 
 **Start**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/Start.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/Start.png?raw=true)
 
 Controls:
 
@@ -38,7 +38,7 @@ Available Settings:
 
 **Tutorial**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/Tutorial.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/Tutorial.png?raw=true)
 
 Controls:
 
@@ -51,7 +51,7 @@ Available Settings:
 
 **Leaderboard**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/Leaderboard.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/Leaderboard.png?raw=true)
 
 Controls:
 
@@ -82,7 +82,7 @@ Available Settings:
 
 **ChoosePlayer**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/ChoosePlayer.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/ChoosePlayer.png?raw=true)
 
 Controls:
 
@@ -102,7 +102,7 @@ Available Settings:
 
 **Play**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/Play.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/Play.png?raw=true)
 
 Controls:
 
@@ -121,7 +121,7 @@ Available Settings:
 
 **Won**
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/Won.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/Won.png?raw=true)
 
 Controls:
 
@@ -137,4 +137,4 @@ No available settings
 
 
 
-![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/Project/Doc/UML.png?raw=true)
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/UML.png?raw=true)
