@@ -1,13 +1,13 @@
 package com.example.victoria.ghost;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
 
 
 public class Lexicon {
 
-    private String[] lexicon;
-    
+    private HashSet<String> lexicon = new HashSet<String>();
+
     private ArrayList<String> filtered = new ArrayList<String>();
     private String currentGuess;
     private String resultWord;
@@ -17,7 +17,10 @@ public class Lexicon {
 //    }
 
     Lexicon(String lexicon) {
-        this.lexicon = lexicon.split("\\r?\\n");
+        String[] words = lexicon.split("\\r?\\n");
+        for(String s:words) {
+            this.lexicon.add(s);
+        }
         this.currentGuess="";
 
     }
