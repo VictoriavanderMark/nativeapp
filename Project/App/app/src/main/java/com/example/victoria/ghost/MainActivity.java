@@ -7,12 +7,29 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 
+    private Lexicon lexicon;
+    private Game game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] words = {"apple", "appletree", "applepie", "appletowel"};
-        Lexicon lexicon = new Lexicon(words);
+        String words = "apple\nappletree\napplepie\nappletowel";
+        lexicon = new Lexicon(words);
+        game = new Game(lexicon);
+
+
+
+
+        String[] guesses = {"a","p","p","l","e","t","o","w","e","l"};
+        for(String g:guesses) {
+            printTurn();
+            game.guess(g);
+            if(game.ended()){
+                getWinner();
+            }
+        }
+
 
     }
 
@@ -37,4 +54,25 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void printTurn() {
+        Boolean turn = game.turn();
+        if (turn == true) {
+            System.out.println("It's P1's turn");
+        } else {
+            System.out.println("It's P2's turn");
+        }
+    }
+
+    public void getWinner() {
+        Boolean winner = game.winner();
+        String winnerName;
+        if (winner == true) {
+            winnerName = "P1";
+        } else {
+            winnerName = "P2";
+        }
+        System.out.println("OVERWINNING " + winnerName);
+    }
+
 }
