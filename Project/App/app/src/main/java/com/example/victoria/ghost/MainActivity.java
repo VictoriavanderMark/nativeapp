@@ -5,28 +5,37 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MainActivity extends Activity {
 
     private Lexicon lexicon;
     private Game game;
+    private String sourceFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String words = "apple\nappletree\napplepie\nappletowel";
-        lexicon = new Lexicon(words);
+
+        sourceFile = "english.txt";
+        lexicon = new Lexicon(this,sourceFile);
         game = new Game(lexicon);
 
 
 
 
-        String[] guesses = {"a","p","p","l","e","t","o","w","e","l"};
+        String[] guesses = {"a","p","p","l","e", "p"};
         for(String g:guesses) {
             printTurn();
             game.guess(g);
             if(game.ended()){
+                System.out.println("GAME OVER!");
                 getWinner();
+                System.out.println("RESULT: " + lexicon.result());
+
+                break;
             }
         }
 
