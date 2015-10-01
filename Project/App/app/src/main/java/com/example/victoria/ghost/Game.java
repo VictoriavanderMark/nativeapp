@@ -32,13 +32,12 @@ public class Game {
         if(currentGuess.length() > 3) {
             int numPossible = lexicon.count();
 
-            if (numPossible == 0 | lexicon.getFiltered().contains(currentGuess)) {
+            System.out.println("NUM POSSIBLE" + numPossible);
+            if (numPossible == 0 || lexicon.getFiltered().contains(currentGuess)) {
                 lexicon.setResultWord(currentGuess);
                 return true;
 
-            } else if (numPossible == 1 & lexicon.result().equals(currentGuess)) {
-                lexicon.setResultWord(currentGuess);
-                return true;
+//
             }
         }
 

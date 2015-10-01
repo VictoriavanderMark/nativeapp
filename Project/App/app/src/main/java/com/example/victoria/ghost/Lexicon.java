@@ -39,11 +39,16 @@ public class Lexicon {
     public void getWords(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;
+        String lastWord = "potato";
         try {
             while((line = reader.readLine()) != null) {
-                lexicon.add(line);
+                if(line.length()>3 & !line.startsWith(lastWord)) {
+                    lexicon.add(line);
+                    lastWord = line;
+                }
             }
-            System.out.println("DICTIONARY LOADED");
+            System.out.println("DICTIONARY LOADED " + lexicon.size());
+
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -75,6 +80,10 @@ public class Lexicon {
                 }
             }
         }
+
+       
+
+        System.out.println("COUNT: " + filtered.size());
     }
 
     public void setResultWord(String result) {

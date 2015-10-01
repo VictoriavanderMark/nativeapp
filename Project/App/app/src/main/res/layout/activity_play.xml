@@ -6,9 +6,55 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="POTATO POTATO"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:background="#ffff0000"
+        android:text="POTATO 1"
+        android:id="@+id/P1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:background="#ff0000ff"
+        android:text="POTATO 2"
+        android:id="@+id/P2"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"/>
+
+
+    <RelativeLayout
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text=""
+            android:id="@+id/word"
+            android:gravity="bottom|right"
+
+            android:textSize="10pt"
+
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:id="@+id/guesser"
+            android:layout_marginTop="8dp"
+            android:textSize="10pt"
+            android:layout_toRightOf="@+id/word"
+            android:maxLength="1"/>
+
+    </RelativeLayout>
+
+
+
 </LinearLayout>
