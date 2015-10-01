@@ -19,28 +19,17 @@ public class Lexicon {
     private ArrayList<String> filtered = new ArrayList<String>();
     private String currentGuess;
     private String resultWord;
-    private Context context;
 
     Lexicon(Context context, String sourcePath ) {
         this.currentGuess = "";
 
-        this.context = context;
         try {
-           InputStream words = context.getApplicationContext().getAssets().open(sourcePath);
+            InputStream words = context.getApplicationContext().getAssets().open(sourcePath);
             getWords(words);
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
-
-//    Lexicon(String lexicon) {
-//        String[] words = lexicon.split("\\r?\\n");
-//        for(String s:words) {
-//            this.lexicon.add(s);
-//        }
-//        this.currentGuess="";
-//
-//    }
 
 
     public ArrayList<String> getFiltered() {
@@ -54,6 +43,7 @@ public class Lexicon {
             while((line = reader.readLine()) != null) {
                 lexicon.add(line);
             }
+            System.out.println("DICTIONARY LOADED");
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -66,16 +56,14 @@ public class Lexicon {
 
     public void filter(String input) {
         currentGuess = input;
+
         if( filtered.size()==0) {
-//            System.out.println("HIJ IS LEEG");
             for (String f : lexicon) {
                 if (f.matches("(?i)" + input + ".*")) {
                     filtered.add(f);
                 }
             }
         } else {
-            //System.out.println("HIJ IS NIET LEEG");
-
             ArrayList<String> temp = new ArrayList<String>();
             for(String f: filtered) {
                 temp.add(f);
@@ -87,9 +75,6 @@ public class Lexicon {
                 }
             }
         }
-//        for (String f:filtered){
-//            System.out.println("Deel van filtered: " + f);
-//        }
     }
 
     public void setResultWord(String result) {
