@@ -32,12 +32,11 @@ public class Game {
         if(currentGuess.length() > 3) {
             int numPossible = lexicon.count();
 
-            System.out.println("NUM POSSIBLE" + numPossible);
-            if (numPossible == 0 || lexicon.getFiltered().contains(currentGuess)) {
+
+            if (numPossible == 0 || lexicon.getFiltered().contains(currentGuess.toLowerCase())) {
                 lexicon.setResultWord(currentGuess);
                 return true;
 
-//
             }
         }
 

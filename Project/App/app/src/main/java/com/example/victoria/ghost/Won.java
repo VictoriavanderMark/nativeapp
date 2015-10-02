@@ -30,7 +30,7 @@ public class Won extends Activity{
         winner = called.getExtras().getString("Winner");
         String word = called.getExtras().getString("Word");
         TextView playerWon = (TextView) findViewById(R.id.winner);
-        playerWon.setText(winner + " won! \"" + word + "\" was spelled");
+        playerWon.setText(winner + " won! \"" + word + "\" was spelled by the other player");
     }
 
 }

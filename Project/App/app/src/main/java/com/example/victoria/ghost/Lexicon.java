@@ -10,11 +10,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class Lexicon {
 
-    private HashSet<String> lexicon = new HashSet<String>();
+    private Set<String> lexicon = new HashSet<String>();
 
     private ArrayList<String> filtered = new ArrayList<String>();
     private String currentGuess;
@@ -42,12 +44,18 @@ public class Lexicon {
         String lastWord = "potato";
         try {
             while((line = reader.readLine()) != null) {
-                if(line.length()>3 & !line.startsWith(lastWord)) {
+                if(line.length()>3 & !(line.startsWith(lastWord))) {
                     lexicon.add(line);
                     lastWord = line;
+
                 }
             }
-            System.out.println("DICTIONARY LOADED " + lexicon.size());
+
+
+
+
+
+
 
         } catch(IOException e) {
             e.printStackTrace();
@@ -62,6 +70,8 @@ public class Lexicon {
     public void filter(String input) {
         currentGuess = input;
 
+
+
         if( filtered.size()==0) {
             for (String f : lexicon) {
                 if (f.matches("(?i)" + input + ".*")) {
@@ -69,21 +79,50 @@ public class Lexicon {
                 }
             }
         } else {
-            ArrayList<String> temp = new ArrayList<String>();
-            for(String f: filtered) {
-                temp.add(f);
-            }
+//            ArrayList<String> temp = new ArrayList<String>();
+//            for(String f: filtered) {
+//                temp.add(f);
+//            }
+//
+//
+//            for (String t : temp) {
+//                if (!(t.startsWith(input.toLowerCase()))) {
+//
+//                    filtered.remove(t);
+//                }
+//            }
 
-            for (String t : temp) {
-                if (!(t.matches(input + ".*"))) {
-                    filtered.remove(t);
+
+
+//            for(int i = filtered.size() -1; i>= 0; i--) {
+//                if(!(filtered.get(i).startsWith(input.toLowerCase()))){
+//                    filtered.remove(filtered.get(i));
+//                }
+//            }
+
+
+
+            String word;
+            for(int i = 0; i<filtered.size(); i++) {
+                word = filtered.get(i);
+
+                if(!(word.startsWith(input.toLowerCase()))){
+                    filtered.remove(word);
+                    i--;
                 }
             }
+
+
+//            for(Iterator<String> it = filtered.iterator(); it.hasNext();) {
+//                String s = it.next();
+//                if(!(s.startsWith(input.toLowerCase()))){
+//                    it.remove();
+//                }
+//            }
+
+
         }
 
-       
-
-        System.out.println("COUNT: " + filtered.size());
     }
 
     public void setResultWord(String result) {
