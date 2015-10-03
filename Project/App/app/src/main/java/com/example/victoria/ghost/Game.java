@@ -18,7 +18,9 @@ public class Game {
         currentGuess = lexicon.getLastGuess()+guess;
         System.out.println("Current Word: " + currentGuess);
 
+        System.out.println("JA HOI");
         lexicon.filter(currentGuess);
+        System.out.println("BEN KLAAR");
         P1turn = !P1turn;
 
         System.out.println("---------------");

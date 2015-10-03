@@ -1,8 +1,6 @@
 package com.example.victoria.ghost;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 
@@ -18,7 +15,8 @@ public class Lexicon {
 
     private Set<String> lexicon = new HashSet<String>();
 
-    private ArrayList<String> filtered = new ArrayList<String>();
+//    private ArrayList<String> filtered = new ArrayList<String>();
+    private Set<String> filtered = new HashSet<String>();
     private String currentGuess;
     private String resultWord;
 
@@ -34,7 +32,7 @@ public class Lexicon {
     }
 
 
-    public ArrayList<String> getFiltered() {
+    public Set<String> getFiltered() {
         return this.filtered;
     }
 
@@ -73,52 +71,23 @@ public class Lexicon {
 
 
         if( filtered.size()==0) {
-            for (String f : lexicon) {
-                if (f.matches("(?i)" + input + ".*")) {
-                    filtered.add(f);
+            for (String l : lexicon) {
+                if (l.startsWith(input.toLowerCase())) {
+                    filtered.add(l);
                 }
             }
         } else {
-//            ArrayList<String> temp = new ArrayList<String>();
-//            for(String f: filtered) {
-//                temp.add(f);
-//            }
-//
-//
-//            for (String t : temp) {
-//                if (!(t.startsWith(input.toLowerCase()))) {
-//
-//                    filtered.remove(t);
-//                }
-//            }
-
-
-
-//            for(int i = filtered.size() -1; i>= 0; i--) {
-//                if(!(filtered.get(i).startsWith(input.toLowerCase()))){
-//                    filtered.remove(filtered.get(i));
-//                }
-//            }
-
-
-
-            String word;
-            for(int i = 0; i<filtered.size(); i++) {
-                word = filtered.get(i);
-
-                if(!(word.startsWith(input.toLowerCase()))){
-                    filtered.remove(word);
-                    i--;
-                }
+            Set<String> temp = new HashSet<String>();
+            for(String f: filtered) {
+                temp.add(f);
             }
 
 
-//            for(Iterator<String> it = filtered.iterator(); it.hasNext();) {
-//                String s = it.next();
-//                if(!(s.startsWith(input.toLowerCase()))){
-//                    it.remove();
-//                }
-//            }
+            for (String t : temp) {
+                if (!(t.startsWith(input.toLowerCase()))) {
+                    filtered.remove(t);
+                }
+            }
 
 
         }
@@ -140,7 +109,7 @@ public class Lexicon {
     }
 
     public void reset() {
-        filtered = new ArrayList<String>();
+        filtered = new HashSet<String>();
     }
 
 }
