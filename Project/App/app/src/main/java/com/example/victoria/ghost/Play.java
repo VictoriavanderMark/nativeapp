@@ -3,9 +3,11 @@ package com.example.victoria.ghost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,6 +18,13 @@ public class Play extends Activity{
     private String sourceFile;
     private EditText letterGuesser;
     private String entered;
+    private Drawable P1;
+    private Drawable P2;
+    private int MIN_OPACITY_P1 = 70;
+    private int MIN_OPACITY_P2 = 50;
+    private int MAX_OPACITY_P1 = 255;
+    private int MAX_OPACITY_P2 = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +36,16 @@ public class Play extends Activity{
         game = new Game(lexicon);
         entered = "";
 
+        P1 = findViewById(R.id.P1).getBackground();
+        P2 = findViewById(R.id.P2).getBackground();
+        P2.setAlpha(MIN_OPACITY_P2);
+
         letterGuesser = (EditText) findViewById(R.id.guesser);
+        letterGuesser.requestFocus();
+        if(letterGuesser.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+
         letterGuesser.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -48,18 +66,23 @@ public class Play extends Activity{
 
 
     public void play(String g) {
-        printTurn();
-        game.guess(g);
-        if(game.ended()){
-            System.out.println("GAME OVER!");
-            String winner = getWinner();
-            System.out.println("RESULT: " + lexicon.result());
-            freeze(winner);
+        if(g.length()>0) {
+            printTurn();
 
-        } else {
-            showWord();
-            letterGuesser.setText("");
+            game.guess(g);
+            if(game.ended()){
+                System.out.println("GAME OVER!");
+                String winner = getWinner();
+                System.out.println("RESULT: " + lexicon.result());
+                freeze(winner);
+
+            } else {
+                showWord();
+                letterGuesser.setText("");
+                setOpacity();
+            }
         }
+
     }
 
     public void showWord() {
@@ -72,13 +95,43 @@ public class Play extends Activity{
 
     }
 
+    public void resetText() {
+        TextView word = (TextView) findViewById(R.id.word);
+        word.setText(entered);
+        letterGuesser.setText("");
+
+    }
+
+    public void setOpacity() {
+
+        if(game.turn()) {
+            P2.setAlpha(MIN_OPACITY_P2);
+            P1.setAlpha(MAX_OPACITY_P1);
+        } else {
+            P2.setAlpha(MAX_OPACITY_P2);
+            P1.setAlpha(MIN_OPACITY_P1);
+        }
+    }
+
     public void freeze(String winner) {
         Intent winGame = new Intent(this, Won.class );
         final int result = 1;
 
+
+        int numPossible = game.getNumPossible();
+        String reason;
+        if(numPossible == 0) {
+            reason = "gibberish";
+        } else {
+            reason = "an existing word";
+        }
+
         winGame.putExtra("Word", entered);
         winGame.putExtra("Winner", winner );
+        winGame.putExtra("Reason", reason);
         startActivityForResult(winGame, result);
+        System.out.println("IK GA RESETTEN");
+        reset();
     }
 
     public void printTurn() {
@@ -105,6 +158,17 @@ public class Play extends Activity{
         return winnerName;
     }
 
+    public void reset() {
+        lexicon.reset();
+        game = new Game(lexicon);
+        setOpacity();
+        entered = "";
+        resetText();
+        letterGuesser.requestFocus();
+        if(letterGuesser.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
 
 
 }

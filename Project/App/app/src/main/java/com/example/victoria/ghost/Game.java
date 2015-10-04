@@ -30,9 +30,12 @@ public class Game {
         return P1turn;
     }
 
+    public int getNumPossible() {
+        return lexicon.count();
+    }
+
     public boolean ended() {
-        if(currentGuess.length() > 3) {
-            int numPossible = lexicon.count();
+            int numPossible = getNumPossible();
 
 
             if (numPossible == 0 || lexicon.getFiltered().contains(currentGuess.toLowerCase())) {
@@ -40,7 +43,6 @@ public class Game {
                 return true;
 
             }
-        }
 
         return false;
 

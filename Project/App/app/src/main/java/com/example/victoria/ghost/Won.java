@@ -2,7 +2,9 @@ package com.example.victoria.ghost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -23,14 +25,28 @@ public class Won extends Activity{
 
         showWinner();
 
+
+        View winning = findViewById(R.id.winner);
+        View root = winning.getRootView();
+//        root.setBackgroundColor(Color.parseColor("#F1F8E9"));
+
     }
+
+    @Override
+    public void onBackPressed() {}
+
 
     public void showWinner() {
         Intent called = getIntent();
         winner = called.getExtras().getString("Winner");
         String word = called.getExtras().getString("Word");
+        String reason = called.getExtras().getString("Reason");
         TextView playerWon = (TextView) findViewById(R.id.winner);
-        playerWon.setText(winner + " won! \"" + word + "\" was spelled by the other player");
+        playerWon.setText(winner + " won! \"" + word + "\" was spelled by the other player, which is " + reason + ".");
+    }
+
+    public void reset(View view) {
+        this.finish();
     }
 
 }

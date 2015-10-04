@@ -15,7 +15,6 @@ public class Lexicon {
 
     private Set<String> lexicon = new HashSet<String>();
 
-//    private ArrayList<String> filtered = new ArrayList<String>();
     private Set<String> filtered = new HashSet<String>();
     private String currentGuess;
     private String resultWord;
@@ -109,7 +108,11 @@ public class Lexicon {
     }
 
     public void reset() {
+
         filtered = new HashSet<String>();
+        currentGuess = "";
+        resultWord = "";
+
     }
 
 }
