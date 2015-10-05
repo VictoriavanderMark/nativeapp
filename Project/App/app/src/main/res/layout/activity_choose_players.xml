@@ -4,7 +4,33 @@
     android:layout_height="match_parent">
 
 
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="#009688"
+        android:textSize="9pt"
+        android:textColor="#E0F2F1"
+        android:id="@+id/P1button"
+        android:textStyle="bold"
+        android:text="Choose Player 1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:onClick="choosePlayer"
+        android:gravity="center"/>
 
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="#EF5350"
+        android:textSize="9pt"
+        android:textColor="#FFF4F6"
+        android:text="Choose Player 2"
+        android:textStyle="bold"
+        android:id="@+id/P2button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:onClick="choosePlayer"
+        android:gravity="center"/>
 
     <Button
         android:layout_width="150dp"
@@ -12,6 +38,7 @@
         android:text="@string/press_start"
         android:id="@+id/play_button"
         android:onClick="playGame"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"/>
 
 </LinearLayout>

@@ -50,14 +50,23 @@ public class ChoosePlayers extends Activity{
         P2name = "Potato 2";
     }
 
+    public void choosePlayer(View v) {
+        //String player = v.getResources().getResourceEntryName(v.getId());
+//        System.out.println(player);
+//        System.out.println("JE HEBT GEKLIKT WOEEH");
+        Intent choosePlayer = new Intent(this, ChoosePlayer.class);
+        final int result = 1;
+        startActivityForResult(choosePlayer, result);
+
+    }
 
     public void playGame(View view) {
         getNames();
         Intent startGame = new Intent(this, Play.class );
-        final int result = 1;
         startGame.putExtra("P1name", P1name.toUpperCase());
         startGame.putExtra("P2name", P2name.toUpperCase());
-        startActivityForResult(startGame, result);
+        startActivity(startGame);
+
     }
 
 }
