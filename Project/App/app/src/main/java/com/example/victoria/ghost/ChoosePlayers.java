@@ -7,18 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends Activity {
+/**
+ * Created by victoria on 5-10-15.
+ */
+public class ChoosePlayers extends Activity{
 
-
+    private String P1name;
+    private String P2name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_choose_players);
 
-
-
-        //play();
     }
 
     @Override
@@ -43,19 +44,20 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void choosePlayers(View view) {
-        Intent choosePlayers = new Intent(this, ChoosePlayers.class);
-        final int result = 1;
-        startActivityForResult(choosePlayers, result);
+
+    public void getNames() {
+        P1name = "Patata 1";
+        P2name = "Potato 2";
     }
 
 
-//    public void playGame(View view) {
-//        Intent getName = new Intent(this, Play.class );
-//        final int result = 1;
-//        startActivityForResult(getName, result);
-//    }
-
-
+    public void playGame(View view) {
+        getNames();
+        Intent startGame = new Intent(this, Play.class );
+        final int result = 1;
+        startGame.putExtra("P1name", P1name.toUpperCase());
+        startGame.putExtra("P2name", P2name.toUpperCase());
+        startActivityForResult(startGame, result);
+    }
 
 }

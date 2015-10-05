@@ -66,7 +66,7 @@ Available Settings:
 
 **ChoosePlayers**
 
-c
+![Image](https://github.com/VictoriavanderMark/nativeapp/blob/master/week4/Proposal/ChoosePlayers.png?raw=true)
 
 Controls:
 

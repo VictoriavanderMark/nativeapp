@@ -14,7 +14,7 @@
         android:layout_height="60dp"
         android:text="@string/press_play"
         android:id="@+id/play_button"
-        android:onClick="playGame"
+        android:onClick="choosePlayers"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

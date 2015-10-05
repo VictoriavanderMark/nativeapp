@@ -36,16 +36,15 @@ public class Play extends Activity{
         game = new Game(lexicon);
         entered = "";
 
-        P1 = findViewById(R.id.P1).getBackground();
-        P2 = findViewById(R.id.P2).getBackground();
-        P2.setAlpha(MIN_OPACITY_P2);
+        initialiseLayout();
+
+
 
         letterGuesser = (EditText) findViewById(R.id.guesser);
         letterGuesser.requestFocus();
         if(letterGuesser.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-
         letterGuesser.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -85,6 +84,23 @@ public class Play extends Activity{
 
     }
 
+    public void initialiseLayout() {
+        P1 = findViewById(R.id.P1).getBackground();
+        P2 = findViewById(R.id.P2).getBackground();
+        setOpacity(true);
+        setPlayerNames();
+    }
+
+    public void setPlayerNames() {
+        Intent called = getIntent();
+        String P1name = called.getExtras().getString("P1name");
+        String P2name = called.getExtras().getString("P2name");
+        ((  (TextView) findViewById(R.id.P1))).setText(P1name);
+        ((  (TextView) findViewById(R.id.P2))).setText(P2name);
+
+
+    }
+
     public void showWord() {
 
         TextView word = (TextView) findViewById(R.id.word);
@@ -100,6 +116,16 @@ public class Play extends Activity{
         word.setText(entered);
         letterGuesser.setText("");
 
+    }
+
+    public void setOpacity(Boolean P1turn) {
+        if(P1turn) {
+            P2.setAlpha(MIN_OPACITY_P2);
+            P1.setAlpha(MAX_OPACITY_P1);
+        } else {
+            P2.setAlpha(MAX_OPACITY_P2);
+            P1.setAlpha(MIN_OPACITY_P1);
+        }
     }
 
     public void setOpacity() {
