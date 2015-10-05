@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,13 +34,18 @@ public class ChoosePlayer extends Activity{
 
     private ArrayList<String> names = new ArrayList<String>();
     private String selected;
+    private int selectedPos;
     private ImageButton delete;
+    private ImageButton choose;
     private ArrayAdapter<String> nameAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_player);
+
+        delete = (ImageButton) findViewById(R.id.delete);
+        choose = (ImageButton) findViewById(R.id.choose);
 
         final ListView nameView = (ListView) findViewById(R.id.nameview);
         readNames();
@@ -48,11 +55,10 @@ public class ChoosePlayer extends Activity{
         nameView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                System.out.println(selected + "--" + names.get(pos));
                 if (selected.equals(names.get(pos))) {
-                    System.out.println("Ik KLIK");
                     unselectName(pos, nameView);
                 } else {
+                    unselect(nameView);
                     selectName(pos, nameView);
 
                 }
@@ -86,16 +92,25 @@ public class ChoosePlayer extends Activity{
 
     public void selectName(int pos, ListView nameView) {
         selected = names.get(pos);
+        selectedPos = pos;
         nameView.getChildAt(pos).setBackgroundColor(Color.rgb(189, 189, 189));
-        delete = (ImageButton) findViewById(R.id.delete);
         delete.setVisibility(View.VISIBLE);
+        choose.setVisibility(View.VISIBLE);
     }
 
     public void unselectName(int pos, ListView nameView) {
         selected = "";
         nameView.getChildAt(pos).setBackgroundColor(Color.TRANSPARENT);
-        delete = (ImageButton) findViewById(R.id.delete);
         delete.setVisibility(View.INVISIBLE);
+        choose.setVisibility(View.INVISIBLE);
+    }
+
+    public void unselect(ListView nameView) {
+        nameView.getChildAt(selectedPos).setBackgroundColor(Color.TRANSPARENT);
+        selected = "";
+        selectedPos = -1;
+        delete.setVisibility(View.INVISIBLE);
+        choose.setVisibility(View.INVISIBLE);
     }
 
     public void readNames(){
@@ -171,8 +186,16 @@ public class ChoosePlayer extends Activity{
         names.remove(selected);
         updateNames();
         selected = "";
-        delete = (ImageButton) findViewById(R.id.delete);
         delete.setVisibility(View.INVISIBLE);
+        choose.setVisibility(View.INVISIBLE);
+    }
+
+    public void choosePlayer(View v) {
+        Intent playerChosen = new Intent(this, ChoosePlayers.class);
+        playerChosen.putExtra("Name", selected);
+        setResult(RESULT_OK, playerChosen);
+        finish();
+
     }
 
 }

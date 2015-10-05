@@ -9,6 +9,11 @@
     <string name="create_player">Create</string>
     <string name="enter_player">Enter the name of the new player</string>
     <string name="cancel_player">Cancel</string>
+    <string name="choose_player">Choose a player</string>
+    <string name="select_players">Select the players</string>
+    <string name="won">Game over!</string>
+    <string name="choose_p1">Choose Player 1</string>
+    <string name="choose_p2">Choose Player 2</string>
 
 
     <string-array name="array">
