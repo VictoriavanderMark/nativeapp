@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -15,11 +18,11 @@ public class Play extends Activity{
 
     private Lexicon lexicon;
     private Game game;
-    private String sourceFile;
     private EditText letterGuesser;
     private String entered;
     private Drawable P1;
     private Drawable P2;
+    private String sourceFile;
     private int MIN_OPACITY_P1 = 70;
     private int MIN_OPACITY_P2 = 50;
     private int MAX_OPACITY_P1 = 255;
@@ -31,7 +34,7 @@ public class Play extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        sourceFile = "english.txt";
+        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
         lexicon = new Lexicon(this,sourceFile);
         game = new Game(lexicon);
         entered = "";
@@ -63,6 +66,39 @@ public class Play extends Activity{
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, Settings.class);
+            this.startActivity(intent);
+            System.out.println("ACTIVITY AFGELOPEN");
+            String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+            System.out.println(sourceFile + "---" + newLanguage); //TODO: fiksen dat verandert tijdens spelen
+            if(!sourceFile.equals(newLanguage)){
+                changeLanguage(newLanguage);
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public void changeLanguage(String newLanguage) {
+        sourceFile = newLanguage;
+        lexicon = new Lexicon(this, sourceFile);
+        reset();
+
+    }
 
     public void play(String g) {
         if(g.length()>0) {
@@ -185,7 +221,13 @@ public class Play extends Activity{
     }
 
     public void reset() {
-        lexicon.reset();
+        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+        if(!(sourceFile.equals(newLanguage))) {
+            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+            lexicon = new Lexicon(this, sourceFile);
+        } else {
+            lexicon.reset();
+        }
         game = new Game(lexicon);
         setOpacity();
         entered = "";

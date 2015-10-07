@@ -2,8 +2,10 @@ package com.example.victoria.ghost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ public class ChoosePlayers extends Activity{
         startGameButton = (Button) findViewById(R.id.play_button);
         startGameButton.getBackground().setAlpha(120);
         startGameButton.setTextColor(Color.parseColor("#7C7272"));
+        startGameButton.setClickable(false);
 
 
     }
@@ -43,13 +46,12 @@ public class ChoosePlayers extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, Settings.class);
+            this.startActivity(intent);
+
             return true;
         }
 
@@ -82,6 +84,7 @@ public class ChoosePlayers extends Activity{
         if(P1selected & P2selected) {
             startGameButton.getBackground().setAlpha(255);
             startGameButton.setTextColor(Color.parseColor("#000000"));
+            startGameButton.setClickable(true);
 
         }
     }

@@ -32,6 +32,8 @@
             android:name=".ChoosePlayer"
             android:label="@string/choose_player" >
         </activity>
+        <activity android:name=".Settings"
+            android:label="Settings"> </activity>
     </application>
 
 </manifest>

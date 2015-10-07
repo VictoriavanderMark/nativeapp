@@ -15,8 +15,19 @@
     <string name="choose_p1">Choose Player 1</string>
     <string name="choose_p2">Choose Player 2</string>
 
+    <!--Choosing the language-->
+    <string name="language_title">Set lexicon language</string>
+    <string name="language_dialog_title">Pick a language</string>
+    <array name="language_values">
+        <item>english.txt</item>
+        <item>dutch.txt</item>
 
-    <string-array name="array">
-        <item>@string/naam1</item>
-    </string-array>
+    </array>
+    <array name="language_entries">
+        <item>English</item>
+        <item>Dutch</item>
+    </array>
+    <string name="language_default">english.txt</string>
+
+
 </resources>
