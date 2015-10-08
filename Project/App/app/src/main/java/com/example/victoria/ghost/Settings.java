@@ -24,6 +24,6 @@ public class Settings extends PreferenceActivity implements SharedPreferences.On
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.layout.preferences);
+        addPreferencesFromResource(R.xml.preferences);
     }
 }

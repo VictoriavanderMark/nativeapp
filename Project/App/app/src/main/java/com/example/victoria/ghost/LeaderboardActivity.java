@@ -175,7 +175,7 @@ public class LeaderboardActivity extends Activity{
                 .setPositiveButton(R.string.create_player, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String addedName = input.getText().toString();
+                        String addedName = input.getText().toString().toUpperCase();
                         if (addedName.length() == 0) {
                             Toast.makeText(getApplicationContext(), "Please enter a name",
                                     Toast.LENGTH_LONG).show();

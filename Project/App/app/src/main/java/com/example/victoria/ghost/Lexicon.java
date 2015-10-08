@@ -35,6 +35,10 @@ public class Lexicon {
         return this.filtered;
     }
 
+    public int getSize() {
+        return lexicon.size();
+    }
+
     public void getWords(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         String line;

@@ -2,6 +2,7 @@ package com.example.victoria.ghost;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 public class Play extends Activity{
 
     private Lexicon lexicon;
@@ -23,6 +31,8 @@ public class Play extends Activity{
     private String entered;
     private Drawable P1;
     private Drawable P2;
+    private String P1name;
+    private String P2name;
     private String sourceFile;
     private int MIN_OPACITY_P1 = 70;
     private int MIN_OPACITY_P2 = 50;
@@ -36,7 +46,9 @@ public class Play extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+        System.out.println("SOURCEFILE: " + sourceFile);
         lexicon = new Lexicon(this,sourceFile);
+        System.out.println(lexicon.getSize());
         game = new Game(lexicon);
         entered = "";
 
@@ -112,10 +124,14 @@ public class Play extends Activity{
 
             game.guess(g);
             if(game.ended()){
-                System.out.println("GAME OVER!");
                 String winner = getWinner();
-                System.out.println("RESULT: " + lexicon.result());
-                freeze(winner);
+                String loser;
+                if(winner.equals(P1name)) {
+                    loser = P2name;
+                } else {
+                    loser = P1name;
+                }
+                freeze(winner, loser);
 
             } else {
                 showWord();
@@ -135,8 +151,8 @@ public class Play extends Activity{
 
     public void setPlayerNames() {
         Intent called = getIntent();
-        String P1name = called.getExtras().getString("P1name");
-        String P2name = called.getExtras().getString("P2name");
+        P1name = called.getExtras().getString("P1name");
+        P2name = called.getExtras().getString("P2name");
         ((  (TextView) findViewById(R.id.P1))).setText(P1name);
         ((  (TextView) findViewById(R.id.P2))).setText(P2name);
 
@@ -181,7 +197,36 @@ public class Play extends Activity{
         }
     }
 
-    public void freeze(String winner) {
+
+    public void updateScore(String winner) {
+        try {
+            FileInputStream fis = openFileInput("leaderboard.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList<Player> players= (ArrayList<Player>) ois.readObject();
+            for (Player p : players) {
+                if(p.getName().equals(winner)) {
+                    p.updateScore();
+                    break;
+                }
+            }
+            ois.close();
+
+            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(players);
+            oos.close();
+
+
+        } catch(IOException e){
+            e.printStackTrace();
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void freeze(String winner, String loser) {
+        updateScore(winner);
         Intent winGame = new Intent(this, Won.class );
         final int result = 1;
 
@@ -196,6 +241,7 @@ public class Play extends Activity{
 
         winGame.putExtra("Word", entered);
         winGame.putExtra("Winner", winner );
+        winGame.putExtra("Loser", loser);
         winGame.putExtra("Reason", reason);
         startActivityForResult(winGame, result);
         System.out.println("IK GA RESETTEN");
@@ -215,13 +261,12 @@ public class Play extends Activity{
         Boolean winner = game.winner();
         String winnerName;
         if (winner) {
-            winnerName = "P1";
+            winnerName = P1name;
 
         } else {
-            winnerName = "P2";
+            winnerName = P2name;
 
         }
-        System.out.println("OVERWINNING " + winnerName);
 
         return winnerName;
     }

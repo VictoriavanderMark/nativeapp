@@ -25,11 +25,6 @@ public class Won extends Activity{
 
         showWinner();
 
-
-        View winning = findViewById(R.id.winner);
-        View root = winning.getRootView();
-//        root.setBackgroundColor(Color.parseColor("#F1F8E9"));
-
     }
 
     @Override
@@ -39,10 +34,11 @@ public class Won extends Activity{
     public void showWinner() {
         Intent called = getIntent();
         winner = called.getExtras().getString("Winner");
+        String loser = called.getExtras().getString("Loser");
         String word = called.getExtras().getString("Word");
         String reason = called.getExtras().getString("Reason");
         TextView playerWon = (TextView) findViewById(R.id.winner);
-        playerWon.setText(winner + " won! \"" + word + "\" was spelled by the other player, which is " + reason + ".");
+        playerWon.setText(winner + " won! \"" + word + "\" was spelled by " + loser + ", which is " + reason + ".");
     }
 
     public void reset(View view) {
