@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +23,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +34,12 @@ import java.util.List;
 public class ChoosePlayer extends Activity{
 
     private ArrayList<String> names = new ArrayList<String>();
+    private ArrayList<Player> players = new ArrayList<Player>();
     private String selected;
     private int selectedPos;
     private ImageButton delete;
     private ImageButton choose;
-    private ArrayAdapter<String> nameAdapter;
+    private ListViewAdapters adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,38 +116,47 @@ public class ChoosePlayer extends Activity{
     }
 
     public void readNames(){
+
         try {
-            String FILENAME = "names";
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
-
-            String line;
-
-            while((line = reader.readLine())!=null){
-                names.add(line);
+            FileInputStream fis = openFileInput("leaderboard.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            players = (ArrayList<Player>) ois.readObject();
+            names = new ArrayList<String>();
+            for(Player p: players) {
+                String name = p.getName();
+                names.add(name);
             }
+            ois.close();
 
             updateNames();
 
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
+
+
     }
 
     public void updateNames() {
-        nameAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, names);
+
+        adapter = new ListViewAdapters(this, players);
+
 
         ListView nameList = (ListView) findViewById(R.id.nameview);
-        nameList.setAdapter(nameAdapter);
+        nameList.setAdapter(adapter);
 
         try {
-            FileOutputStream fos = openFileOutput("names", Context.MODE_PRIVATE);
-            for (String s : names) {
-                fos.write((s + "\n").getBytes());
-            }
-            fos.close();
+            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
+            System.out.println("geschreven");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(players);
+            oos.close();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -163,11 +174,19 @@ public class ChoosePlayer extends Activity{
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String addedName = input.getText().toString();
-                        if (!(names.contains(addedName))) {
+                        if (addedName.length() == 0) {
+                            Toast.makeText(getApplicationContext(), "Please enter a name",
+                                    Toast.LENGTH_LONG).show();
+
+                        } else if (!(names.contains(addedName))) {
                             names.add(addedName);
+                            Player newPlayer = new Player(addedName);
+                            players.add(newPlayer);
                             updateNames();
-                        } else {
-                            Toast.makeText(getApplicationContext(),"Already exists!",
+                        } else
+
+                        {
+                            Toast.makeText(getApplicationContext(), "Already exists!",
                                     Toast.LENGTH_LONG).show();
 
                         }
@@ -184,6 +203,13 @@ public class ChoosePlayer extends Activity{
 
     public void removeName(View v) {
         names.remove(selected);
+        // remove from players array
+        for(Player p:players) {
+            if(p.getName().equals(selected)) {
+                players.remove(p);
+                break;
+            }
+        }
         updateNames();
         selected = "";
         delete.setVisibility(View.INVISIBLE);

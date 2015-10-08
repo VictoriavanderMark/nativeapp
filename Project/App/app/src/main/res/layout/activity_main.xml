@@ -17,4 +17,22 @@
         android:onClick="choosePlayers"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/press_tutorial"
+        android:id="@+id/tutorial"
+        android:onClick="showTutorial"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="@string/press_leaderboard"
+        android:id="@+id/leaderboard"
+        android:onClick="showLeaderboard"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

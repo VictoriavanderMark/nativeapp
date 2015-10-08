@@ -16,11 +16,12 @@
         <ListView
             android:id="@+id/nameview"
             android:scrollbars="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="fill_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:clickable="true">
-            <!--android:entries="@array/array"-->
 
         </ListView>
 

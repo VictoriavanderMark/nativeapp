@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Play extends Activity{
 
@@ -81,16 +82,21 @@ public class Play extends Activity{
             Intent intent = new Intent(this, Settings.class);
             this.startActivity(intent);
             System.out.println("ACTIVITY AFGELOPEN");
-            String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
-            System.out.println(sourceFile + "---" + newLanguage); //TODO: fiksen dat verandert tijdens spelen
-            if(!sourceFile.equals(newLanguage)){
-                changeLanguage(newLanguage);
-            }
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onOptionsMenuClosed(Menu menu) {
+        System.out.println(sourceFile);
+        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, ""));
+                Toast.makeText(getApplicationContext(), "Changes will be effective after restarting the game",
+                        Toast.LENGTH_LONG).show(); //TODO werkt niet
+    }
+
 
 
     public void changeLanguage(String newLanguage) {

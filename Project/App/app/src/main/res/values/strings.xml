@@ -3,7 +3,14 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Main Screen-->
     <string name="press_play">Play!</string>
+    <string name="press_tutorial">Tutorial</string>
+    <string name="press_leaderboard">Leaderboard</string>
+
+
+
     <string name="press_start">Start Game</string>
     <string name="naam1">Jan</string>
     <string name="create_player">Create</string>

@@ -1,11 +1,20 @@
 package com.example.victoria.ghost;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -44,16 +53,38 @@ public class MainActivity extends Activity {
 
     public void choosePlayers(View view) {
         Intent choosePlayers = new Intent(this, ChoosePlayers.class);
-        final int result = 1;
-        startActivityForResult(choosePlayers, result);
+        startActivity(choosePlayers);
+    }
+
+    public void showTutorial(View v) {
+        ArrayList<Player> test= new ArrayList<Player>();
+
+        try {
+            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(test);
+            oos.close();
+            System.out.println("geschreven");
+
+
+
+
+        } catch(IOException e) {
+            e.printStackTrace();
+
+        }
+
+        //TODO tutorial
     }
 
 
-//    public void playGame(View view) {
-//        Intent getName = new Intent(this, Play.class );
-//        final int result = 1;
-//        startActivityForResult(getName, result);
-//    }
+    public void showLeaderboard(View v) {
+        Intent getLeaderboard = new Intent(this, LeaderboardActivity.class);
+        startActivity(getLeaderboard);
+
+    }
+
+
 
 
 
