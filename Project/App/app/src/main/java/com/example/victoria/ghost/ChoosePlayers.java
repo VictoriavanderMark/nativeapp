@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by victoria on 5-10-15.
@@ -62,8 +63,6 @@ public class ChoosePlayers extends Activity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data !=null) {
             chosenName = data.getExtras().getString("Name").toUpperCase();
-            System.out.println("gekzoen:" + chosenName);
-
             setName();
         }
     }
@@ -91,9 +90,6 @@ public class ChoosePlayers extends Activity{
 
     public void choosePlayer(View v) {
         chosenName = "";
-        //String player = v.getResources().getResourceEntryName(v.getId());
-//        System.out.println(player);
-//        System.out.println("JE HEBT GEKLIKT WOEEH");
         viewToChange = v;
         Intent choosePlayer = new Intent(this, ChoosePlayer.class);
         final int result = 1;
@@ -104,20 +100,23 @@ public class ChoosePlayers extends Activity{
 
     public void setName() {
         if (chosenName.length() > 0) {
-            System.out.println("Hij is langer dan 0");
-            System.out.println("The chosen name!" + chosenName);
             ((TextView) viewToChange).setText(chosenName);
-            System.out.println("viewToChange text " + ((TextView) viewToChange).getText().toString());
             updateNames();
         }
     }
 
     public void playGame(View view) {
+
         updateNames();
-        Intent startGame = new Intent(this, Play.class );
-        startGame.putExtra("P1name", P1name.toUpperCase());
-        startGame.putExtra("P2name", P2name.toUpperCase());
-        startActivity(startGame);
+        if(!P1name.equals(P2name)) {
+            Intent startGame = new Intent(this, Play.class);
+            startGame.putExtra("P1name", P1name.toUpperCase());
+            startGame.putExtra("P2name", P2name.toUpperCase());
+            startActivity(startGame);
+        } else {
+            Toast.makeText(getApplicationContext(), "Please choose two different players",
+                    Toast.LENGTH_SHORT).show();
+        }
 
     }
 

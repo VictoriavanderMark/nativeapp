@@ -45,7 +45,7 @@ public class Play extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
         System.out.println("SOURCEFILE: " + sourceFile);
         lexicon = new Lexicon(this,sourceFile);
         System.out.println(lexicon.getSize());
@@ -91,7 +91,7 @@ public class Play extends Activity{
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
+            Intent intent = new Intent(this, Settings_inGame.class);
             this.startActivity(intent);
             System.out.println("ACTIVITY AFGELOPEN");
 
@@ -104,7 +104,7 @@ public class Play extends Activity{
     @Override
     public void onOptionsMenuClosed(Menu menu) {
         System.out.println(sourceFile);
-        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, ""));
+        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, ""));
                 Toast.makeText(getApplicationContext(), "Changes will be effective after restarting the game",
                         Toast.LENGTH_LONG).show(); //TODO werkt niet
     }
@@ -272,9 +272,9 @@ public class Play extends Activity{
     }
 
     public void reset() {
-        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
         if(!(sourceFile.equals(newLanguage))) {
-            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.KEY_PREF_SYNC_CONN, "");
+            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
             lexicon = new Lexicon(this, sourceFile);
         } else {
             lexicon.reset();
