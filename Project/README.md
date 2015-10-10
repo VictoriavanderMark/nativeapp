@@ -17,6 +17,6 @@ Necessities
 
 Running the program
 
-* Download the Project folder
-* Open the project inside the folder in Android Studio
+* Delete everything but the Project file
+* Open the App folder in Android Studio
 * Build and run the project

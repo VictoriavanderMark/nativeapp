@@ -37,4 +37,9 @@
     <string name="language_default">english.txt</string>
 
 
+
+    <string name="tutorial_text_1">Ghost is a word game in which players take turns adding letters to a growing word fragment, trying not to be the one to complete a valid word.</string>
+    <string name="tutorial_text_2"> Each fragment must be the beginning of an actual word. Words are checked when they have four characters or more.</string>
+    <string name="tutorial_text_3">The player who completes a word loses the game. Another way of losing is by adding a letter to the word fragment, forming a non-existing word.</string>
+
 </resources>

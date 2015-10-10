@@ -5,34 +5,45 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:background="#CCCBC6">
+    <!--android:background="#DAC380" >-->
 
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="@string/press_play"
+        android:layout_width="230dp"
+        android:layout_height="80dp"
         android:id="@+id/play_button"
         android:onClick="choosePlayers"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/play"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="@string/press_tutorial"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/tutorial"
         android:onClick="showTutorial"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/tutorial"
+        android:layout_marginRight="10dp"
+        />
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="@string/press_leaderboard"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:id="@+id/leaderboard"
         android:onClick="showLeaderboard"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/leaderboard"/>
 
+    </LinearLayout>
 </LinearLayout>

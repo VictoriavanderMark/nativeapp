@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<TextView
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:text="@string/tutorial_text_1"
+    android:textSize="8pt"
+    android:layout_gravity="center"
+    android:layout_marginTop="90dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+
+    />
+
+<TextView
+    android:layout_width="350dp"
+    android:layout_marginTop="30dp"
+    android:layout_height="wrap_content"
+    android:text="@string/tutorial_text_2"
+    android:textSize="8pt"
+    android:layout_gravity="center"
+    android:gravity="right"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+
+    />
+
+<TextView
+    android:layout_width="350dp"
+    android:layout_marginTop="30dp"
+    android:layout_height="wrap_content"
+    android:text="@string/tutorial_text_3"
+    android:textSize="8pt"
+    android:layout_gravity="center"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+
+    />
+
+
+
+</LinearLayout>
