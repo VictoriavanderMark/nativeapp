@@ -36,6 +36,7 @@ public class ChoosePlayers extends Activity{
         startGameButton.setClickable(false);
 
 
+
     }
 
     @Override
@@ -106,8 +107,6 @@ public class ChoosePlayers extends Activity{
     }
 
     public void playGame(View view) {
-
-        updateNames();
         if(!P1name.equals(P2name)) {
             Intent startGame = new Intent(this, Play.class);
             startGame.putExtra("P1name", P1name.toUpperCase());

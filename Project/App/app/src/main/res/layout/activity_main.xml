@@ -6,8 +6,7 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="#CCCBC6">
-    <!--android:background="#DAC380" >-->
+    android:background="@color/back_colour">
 
 
     <Button

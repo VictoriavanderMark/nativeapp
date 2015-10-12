@@ -21,7 +21,8 @@
             android:layout_gravity="fill_vertical"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:clickable="true">
+            android:clickable="true"
+            android:background="@color/back_colour">
 
         </ListView>
 

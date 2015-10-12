@@ -151,7 +151,6 @@ public class ChoosePlayer extends Activity{
 
         try {
             FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
-            System.out.println("geschreven");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(players);
             oos.close();

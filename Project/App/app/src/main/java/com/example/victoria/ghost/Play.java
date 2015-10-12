@@ -4,6 +4,7 @@ package com.example.victoria.ghost;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,6 +16,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,8 +32,8 @@ public class Play extends Activity{
     private Game game;
     private EditText letterGuesser;
     private String entered;
-    private Drawable P1;
-    private Drawable P2;
+    private TextView P1;
+    private TextView P2;
     private String P1name;
     private String P2name;
     private String sourceFile;
@@ -38,6 +41,8 @@ public class Play extends Activity{
     private int MIN_OPACITY_P2 = 50;
     private int MAX_OPACITY_P1 = 255;
     private int MAX_OPACITY_P2 = 200;
+    private String MIN_OPACITY_TEXT = "#A39898";
+    private String MAX_OPACITY_TEXT = "#000000";
 
 
     @Override
@@ -143,8 +148,8 @@ public class Play extends Activity{
     }
 
     public void initialiseLayout() {
-        P1 = findViewById(R.id.P1).getBackground();
-        P2 = findViewById(R.id.P2).getBackground();
+        P1 = (TextView) findViewById(R.id.P1);
+        P2 = (TextView) findViewById(R.id.P2);
         setOpacity(true);
         setPlayerNames();
     }
@@ -178,23 +183,20 @@ public class Play extends Activity{
 
     public void setOpacity(Boolean P1turn) {
         if(P1turn) {
-            P2.setAlpha(MIN_OPACITY_P2);
-            P1.setAlpha(MAX_OPACITY_P1);
+            P2.getBackground().setAlpha(MIN_OPACITY_P2);
+            P2.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
+            P1.getBackground().setAlpha(MAX_OPACITY_P1);
+            P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
         } else {
-            P2.setAlpha(MAX_OPACITY_P2);
-            P1.setAlpha(MIN_OPACITY_P1);
+            P2.getBackground().setAlpha(MAX_OPACITY_P2);
+            P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+            P1.getBackground().setAlpha(MIN_OPACITY_P1);
+            P1.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
         }
     }
 
     public void setOpacity() {
-
-        if(game.turn()) {
-            P2.setAlpha(MIN_OPACITY_P2);
-            P1.setAlpha(MAX_OPACITY_P1);
-        } else {
-            P2.setAlpha(MAX_OPACITY_P2);
-            P1.setAlpha(MIN_OPACITY_P1);
-        }
+        setOpacity(game.turn());
     }
 
 

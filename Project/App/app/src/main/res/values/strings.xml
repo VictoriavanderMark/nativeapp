@@ -42,4 +42,7 @@
     <string name="tutorial_text_2"> Each fragment must be the beginning of an actual word. Words are checked when they have four characters or more.</string>
     <string name="tutorial_text_3">The player who completes a word loses the game. Another way of losing is by adding a letter to the word fragment, forming a non-existing word.</string>
 
+
+    <color name="back_colour">#f8f2da</color>
+
 </resources>
