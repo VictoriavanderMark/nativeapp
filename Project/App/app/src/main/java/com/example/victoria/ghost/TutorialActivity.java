@@ -10,7 +10,7 @@ import android.view.MenuItem;
 /**
  * Created by victoria on 10-10-15.
  */
-public class Tutorial extends Activity {
+public class TutorialActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class Tutorial extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            this.startActivity(intent);
+            Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(showSettingsIntent);
 
             return true;
         }

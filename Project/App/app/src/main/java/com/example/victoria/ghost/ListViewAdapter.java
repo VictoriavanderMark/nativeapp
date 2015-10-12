@@ -4,11 +4,8 @@ package com.example.victoria.ghost;
  * Created by victoria on 8-10-15.
  */
 
-import static com.example.victoria.ghost.Constants.FIRST_COLUMN;
-import static com.example.victoria.ghost.Constants.SECOND_COLUMN;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -17,14 +14,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ListViewAdapters extends BaseAdapter {
+public class ListViewAdapter extends BaseAdapter {
 
     public ArrayList<Player> list;
     Activity activity;
     TextView txtFirst;
     TextView txtSecond;
 
-    ListViewAdapters(Activity activity,ArrayList<Player> list){
+    ListViewAdapter(Activity activity, ArrayList<Player> list){
         super();
         this.activity=activity;
         this.list=list;

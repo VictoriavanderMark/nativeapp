@@ -2,10 +2,8 @@ package com.example.victoria.ghost;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +14,7 @@ import android.widget.Toast;
 /**
  * Created by victoria on 5-10-15.
  */
-public class ChoosePlayers extends Activity{
+public class ChoosePlayersActivity extends Activity{
 
     private String P1name;
     private String P2name;
@@ -30,6 +28,8 @@ public class ChoosePlayers extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_players);
+
+
         startGameButton = (Button) findViewById(R.id.play_button);
         startGameButton.getBackground().setAlpha(120);
         startGameButton.setTextColor(Color.parseColor("#7C7272"));
@@ -51,8 +51,8 @@ public class ChoosePlayers extends Activity{
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            this.startActivity(intent);
+            Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(showSettingsIntent);
 
             return true;
         }
@@ -61,9 +61,9 @@ public class ChoosePlayers extends Activity{
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(data !=null) {
-            chosenName = data.getExtras().getString("Name").toUpperCase();
+    protected void onActivityResult(int requestCode, int resultCode, Intent playerChosenIntent) {
+        if(playerChosenIntent !=null) {
+            chosenName = playerChosenIntent.getExtras().getString("Name").toUpperCase();
             setName();
         }
     }
@@ -92,9 +92,9 @@ public class ChoosePlayers extends Activity{
     public void choosePlayer(View v) {
         chosenName = "";
         viewToChange = v;
-        Intent choosePlayer = new Intent(this, ChoosePlayer.class);
+        Intent showPlayerListIntent = new Intent(this, PlayerListActivity.class);
         final int result = 1;
-        startActivityForResult(choosePlayer, result);
+        startActivityForResult(showPlayerListIntent, result);
 
 
     }
@@ -108,10 +108,12 @@ public class ChoosePlayers extends Activity{
 
     public void playGame(View view) {
         if(!P1name.equals(P2name)) {
-            Intent startGame = new Intent(this, Play.class);
-            startGame.putExtra("P1name", P1name.toUpperCase());
-            startGame.putExtra("P2name", P2name.toUpperCase());
-            startActivity(startGame);
+            startGameButton.setText("LOADING...");
+            Intent startNewGameIntent = new Intent(this, GameActivity.class);
+            startNewGameIntent.putExtra("P1name", P1name.toUpperCase());
+            startNewGameIntent.putExtra("P2name", P2name.toUpperCase());
+            startActivity(startNewGameIntent);
+            finish();
         } else {
             Toast.makeText(getApplicationContext(), "Please choose two different players",
                     Toast.LENGTH_SHORT).show();

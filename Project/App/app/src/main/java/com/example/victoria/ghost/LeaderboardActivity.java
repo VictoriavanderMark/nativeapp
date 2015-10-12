@@ -18,15 +18,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by victoria on 5-10-15.
@@ -38,7 +35,7 @@ public class LeaderboardActivity extends Activity{
     private int selectedPos;
     private ImageButton delete;
     private ArrayAdapter<String> nameAdapter;
-    private ListViewAdapters adapter;
+    private ListViewAdapter adapter;
 
 
     @Override
@@ -58,10 +55,12 @@ public class LeaderboardActivity extends Activity{
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 if (selected.equals(names.get(pos))) {
                     unselectName(pos, nameView);
-                } else {
+                } else if (selected.length()>0) {
                     unselect(nameView);
                     selectName(pos, nameView);
 
+                } else {
+                    selectName(pos, nameView);
                 }
             }
         });
@@ -81,8 +80,8 @@ public class LeaderboardActivity extends Activity{
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            this.startActivity(intent);
+            Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(showSettingsIntent);
 
             return true;
         }
@@ -141,7 +140,7 @@ public class LeaderboardActivity extends Activity{
 //        nameAdapter = new ArrayAdapter<String>(this,
 //                android.R.layout.simple_list_item_1, names);
 
-        adapter = new ListViewAdapters(this, players);
+        adapter = new ListViewAdapter(this, players);
 
 
 

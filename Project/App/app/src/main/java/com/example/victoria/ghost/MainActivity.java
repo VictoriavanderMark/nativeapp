@@ -1,7 +1,6 @@
 package com.example.victoria.ghost;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,17 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,30 +30,29 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            this.startActivity(intent);
-
+            Intent getSettingsIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(getSettingsIntent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void choosePlayers(View view) {
-        Intent choosePlayers = new Intent(this, ChoosePlayers.class);
-        startActivity(choosePlayers);
+    public void playGame(View view) {
+        Intent choosePlayersIntent = new Intent(this, ChoosePlayersActivity.class);
+        startActivity(choosePlayersIntent);
     }
 
     public void showTutorial(View v) {
-        Intent getTutorial = new Intent(this, Tutorial.class);
-        startActivity(getTutorial);
+        Intent showTutorialIntent = new Intent(this, TutorialActivity.class);
+        startActivity(showTutorialIntent);
 
     }
 
 
     public void showLeaderboard(View v) {
-        Intent getLeaderboard = new Intent(this, LeaderboardActivity.class);
-        startActivity(getLeaderboard);
+        Intent showLeaderboardIntent = new Intent(this, LeaderboardActivity.class);
+        startActivity(showLeaderboardIntent);
 
     }
 

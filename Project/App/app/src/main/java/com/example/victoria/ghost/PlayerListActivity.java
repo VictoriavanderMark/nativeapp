@@ -12,26 +12,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by victoria on 5-10-15.
  */
-public class ChoosePlayer extends Activity{
+public class PlayerListActivity extends Activity{
 
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<Player> players = new ArrayList<Player>();
@@ -39,7 +35,7 @@ public class ChoosePlayer extends Activity{
     private int selectedPos;
     private ImageButton delete;
     private ImageButton choose;
-    private ListViewAdapters adapter;
+    private ListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +55,12 @@ public class ChoosePlayer extends Activity{
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 if (selected.equals(names.get(pos))) {
                     unselectName(pos, nameView);
-                } else {
+                } else if (selected.length()>0) {
                     unselect(nameView);
                     selectName(pos, nameView);
 
+                } else {
+                    selectName(pos, nameView);
                 }
             }
         });
@@ -82,8 +80,8 @@ public class ChoosePlayer extends Activity{
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings.class);
-            this.startActivity(intent);
+            Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+            this.startActivity(showSettingsIntent);
 
             return true;
         }
@@ -143,7 +141,7 @@ public class ChoosePlayer extends Activity{
 
     public void updateNames() {
 
-        adapter = new ListViewAdapters(this, players);
+        adapter = new ListViewAdapter(this, players);
 
 
         ListView nameList = (ListView) findViewById(R.id.nameview);
@@ -216,9 +214,9 @@ public class ChoosePlayer extends Activity{
     }
 
     public void choosePlayer(View v) {
-        Intent playerChosen = new Intent(this, ChoosePlayers.class);
-        playerChosen.putExtra("Name", selected);
-        setResult(RESULT_OK, playerChosen);
+        Intent playerChosenIntent = new Intent(this, ChoosePlayersActivity.class);
+        playerChosenIntent.putExtra("Name", selected);
+        setResult(RESULT_OK, playerChosenIntent);
         finish();
 
     }

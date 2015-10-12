@@ -1,48 +1,46 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:layout_gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity"
     android:background="@color/back_colour">
 
 
     <Button
         android:layout_width="230dp"
         android:layout_height="80dp"
-        android:id="@+id/play_button"
-        android:onClick="choosePlayers"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/play"/>
+        android:background="@drawable/play_game_button"
+        android:onClick="playGame"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/tutorial"
-        android:onClick="showTutorial"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/tutorial"
-        android:layout_marginRight="10dp"
-        />
 
-    <Button
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/leaderboard"
-        android:onClick="showLeaderboard"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/leaderboard"/>
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/tutorial_button"
+            android:onClick="showTutorial"/>
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/leaderboard_button"
+            android:onClick="showLeaderboard"/>
 
     </LinearLayout>
+
 </LinearLayout>

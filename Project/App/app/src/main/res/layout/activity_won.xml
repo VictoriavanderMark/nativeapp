@@ -1,21 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/back_colour">
+    android:orientation="vertical"
+    android:background="@color/back_colour"
+    >
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/winner"
-        android:text=""/>
+
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/winner"
+            android:textSize="20pt"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9pt"
+            android:id="@+id/winner_details"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        >
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/restart"
+            android:onClick="reset"
+            android:background="@drawable/reset"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/home"
+            android:onClick="returnHome"
+            android:background="@drawable/home"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
 
     <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/restart"
-        android:onClick="reset"
-        android:background="@drawable/reset"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/leaderboard_after_won"
+        android:onClick="showLeaderboard"
+        android:background="@drawable/leaderboard_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="45dp"/>
+
+
 
 </LinearLayout>

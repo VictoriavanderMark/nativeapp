@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
@@ -17,8 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +23,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class Play extends Activity{
+public class GameActivity extends Activity{
 
     private Lexicon lexicon;
     private Game game;
@@ -40,7 +37,7 @@ public class Play extends Activity{
     private int MIN_OPACITY_P1 = 70;
     private int MIN_OPACITY_P2 = 50;
     private int MAX_OPACITY_P1 = 255;
-    private int MAX_OPACITY_P2 = 200;
+    private int MAX_OPACITY_P2 = 255;
     private String MIN_OPACITY_TEXT = "#A39898";
     private String MAX_OPACITY_TEXT = "#000000";
 
@@ -50,7 +47,7 @@ public class Play extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
+        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
         System.out.println("SOURCEFILE: " + sourceFile);
         lexicon = new Lexicon(this,sourceFile);
         System.out.println(lexicon.getSize());
@@ -96,9 +93,9 @@ public class Play extends Activity{
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, Settings_inGame.class);
-            this.startActivity(intent);
-            System.out.println("ACTIVITY AFGELOPEN");
+            Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+            showSettingsIntent.putExtra("CalledInGame", true);
+            this.startActivity(showSettingsIntent);
 
             return true;
         }
@@ -109,12 +106,17 @@ public class Play extends Activity{
     @Override
     public void onOptionsMenuClosed(Menu menu) {
         System.out.println(sourceFile);
-        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, ""));
+        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, ""));
                 Toast.makeText(getApplicationContext(), "Changes will be effective after restarting the game",
                         Toast.LENGTH_LONG).show(); //TODO werkt niet
     }
 
 
+    @Override
+    public void onBackPressed() {
+        resetOpacity();
+        finish();
+    }
 
     public void changeLanguage(String newLanguage) {
         sourceFile = newLanguage;
@@ -155,9 +157,9 @@ public class Play extends Activity{
     }
 
     public void setPlayerNames() {
-        Intent called = getIntent();
-        P1name = called.getExtras().getString("P1name");
-        P2name = called.getExtras().getString("P2name");
+        Intent startNewGameIntent = getIntent();
+        P1name = startNewGameIntent.getExtras().getString("P1name");
+        P2name = startNewGameIntent.getExtras().getString("P2name");
         ((  (TextView) findViewById(R.id.P1))).setText(P1name);
         ((  (TextView) findViewById(R.id.P2))).setText(P2name);
 
@@ -229,8 +231,7 @@ public class Play extends Activity{
 
     public void freeze(String winner, String loser) {
         updateScore(winner);
-        Intent winGame = new Intent(this, Won.class );
-        final int result = 1;
+        Intent gameWonIntent = new Intent(this, WinningActivity.class );
 
 
         int numPossible = game.getNumPossible();
@@ -241,15 +242,23 @@ public class Play extends Activity{
             reason = "an existing word";
         }
 
-        winGame.putExtra("Word", entered);
-        winGame.putExtra("Winner", winner );
-        winGame.putExtra("Loser", loser);
-        winGame.putExtra("Reason", reason);
-        startActivityForResult(winGame, result);
-        System.out.println("IK GA RESETTEN");
-        reset();
+        gameWonIntent.putExtra("Word", entered);
+        gameWonIntent.putExtra("Winner", winner );
+        gameWonIntent.putExtra("Loser", loser);
+        gameWonIntent.putExtra("Reason", reason);
+        startActivity(gameWonIntent);
+        resetOpacity();
+        finish();
     }
 
+    public void resetOpacity() {
+        P1.getBackground().setAlpha(MAX_OPACITY_P1);
+        P2.getBackground().setAlpha(MAX_OPACITY_P2);
+        P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+        P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+
+
+    }
     public void printTurn() {
         Boolean turn = game.turn();
         if (turn) {
@@ -274,9 +283,9 @@ public class Play extends Activity{
     }
 
     public void reset() {
-        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
+        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
         if(!(sourceFile.equals(newLanguage))) {
-            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(Settings_inGame.KEY_PREF_SYNC_CONN, "");
+            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
             lexicon = new Lexicon(this, sourceFile);
         } else {
             lexicon.reset();
