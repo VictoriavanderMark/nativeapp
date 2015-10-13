@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="@drawable/p1"
+        android:background="@drawable/p1name_template"
         android:textSize="9pt"
         android:textColor="#000000"
         android:id="@+id/P1"
@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="@drawable/p2"
+        android:background="@drawable/p2name_template"
         android:textSize="9pt"
         android:textColor="#000000"
         android:textStyle="bold"

@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">Ghost</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
-    <!-- Main Screen-->
-    <string name="press_play">Play!</string>
-    <string name="press_tutorial">Tutorial</string>
-    <string name="press_leaderboard">Leaderboard</string>
-
 
 
     <string name="press_start">Start Game</string>
@@ -19,8 +11,13 @@
     <string name="choose_player">Choose a player</string>
     <string name="select_players">Select the players</string>
     <string name="won">Game over!</string>
-    <string name="choose_p1">Choose Player 1</string>
-    <string name="choose_p2">Choose Player 2</string>
+
+    <!-- Choose Players text-->
+    <string name="choose_p1_text">Choose Player 1</string>
+    <string name="choose_p2_text">Choose Player 2</string>
+    <string name="start_game_text">START GAME</string>
+    <string name="loading_game_text">LOADING...</string>
+
 
     <!--Choosing the language-->
     <string name="language_title">Set lexicon language</string>
@@ -29,6 +26,7 @@
         <item>english.txt</item>
         <item>dutch.txt</item>
 
+    <!-- Lexicon language settings entries-->
     </array>
     <array name="language_entries">
         <item>English</item>
@@ -37,10 +35,17 @@
     <string name="language_default">english.txt</string>
 
 
-
+    <!--Tutorial text-->
     <string name="tutorial_text_1">Ghost is a word game in which players take turns adding letters to a growing word fragment, trying not to be the one to complete a valid word.</string>
     <string name="tutorial_text_2"> Each fragment must be the beginning of an actual word. Words are checked when they have four characters or more.</string>
     <string name="tutorial_text_3">The player who completes a word loses the game. Another way of losing is by adding a letter to the word fragment, forming a non-existing word.</string>
+
+    <!-- Winning screen  -->
+    <string name="home_button_description">Returns the player to the main screen of the application</string>
+    <string name="reset_button_description">Starts another game with the same players</string>
+    <string name="leaderboard_button_description">Shows the leaderboard</string>
+    <string name="leaderboard_sourcefile">leaderboard.txt</string>
+
 
 
     <color name="back_colour">#f8f2da</color>

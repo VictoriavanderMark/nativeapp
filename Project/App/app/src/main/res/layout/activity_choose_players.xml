@@ -6,51 +6,42 @@
     android:orientation="vertical"
     android:background="@color/back_colour">
 
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="@drawable/p1name_template"
+        android:text="@string/choose_p1_text"
+        android:textSize="9pt"
+        android:textStyle="bold"
+        android:onClick="choosePlayer"
+        android:id="@+id/choose_p1_button"/>
 
     <Button
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:textSize="9pt"
-        android:textColor="#000000"
-        android:id="@+id/P1button"
-        android:textStyle="bold"
-        android:text="@string/choose_p1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        android:onClick="choosePlayer"
-        android:gravity="center"
-        android:background="@drawable/p1"/>
-
-         <Button
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:background="@drawable/p2"
-        android:textSize="9pt"
-        android:text="@string/choose_p2"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:id="@+id/P2button"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="@drawable/p2name_template"
+        android:text="@string/choose_p2_text"
+        android:textSize="9pt"
+        android:textStyle="bold"
         android:onClick="choosePlayer"
-        android:gravity="center"/>
+        android:id="@+id/choose_p2_button"/>
 
-
-    <!--             android:textColor="#FFF4F6"
-  android:background="#EF5350"
--->
     <Button
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:id="@+id/play_button"
-        android:onClick="playGame"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:background="@drawable/empty_small"
-        android:text="START GAME"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/start_game_text_template"
+        android:text="@string/start_game_text"
         android:textSize="9pt"
-        android:textStyle="bold"/>
-
-
+        android:textStyle="bold"
+        android:onClick="playGame"
+        android:id="@+id/start_game_button"/>
 
 </LinearLayout>

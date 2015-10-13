@@ -4,77 +4,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/back_colour"
-    >
-
+    android:background="@color/back_colour">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:layout_marginTop="50dp"
+        android:layout_gravity="center"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
-        >
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/winner"
-            android:textSize="20pt"
+            android:textSize="17pt"
             android:textStyle="bold"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:id="@+id/winner_essential_message"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:textSize="9pt"
-            android:id="@+id/winner_details"
-            android:gravity="center"/>
+            android:id="@+id/winner_details_message"/>
 
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/restart"
-            android:onClick="reset"
-            android:background="@drawable/reset"
+            android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"/>
+            android:background="@drawable/reset_button"
+            android:onClick="resetGame"
+            android:contentDescription="@string/reset_button_description"
+            />
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/home"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/home_button"
             android:onClick="returnHome"
-            android:background="@drawable/home"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"/>
+            android:contentDescription="@string/home_button_description"
+            />
 
     </LinearLayout>
 
     <ImageButton
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/leaderboard_after_won"
-        android:onClick="showLeaderboard"
-        android:background="@drawable/leaderboard_button"
+        android:layout_marginTop="35dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="45dp"/>
-
-
+        android:background="@drawable/leaderboard_button"
+        android:onClick="showLeaderboard"
+        android:contentDescription="@string/leaderboard_button_description"
+        />
 
 </LinearLayout>

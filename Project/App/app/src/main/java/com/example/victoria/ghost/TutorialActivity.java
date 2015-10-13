@@ -7,9 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Created by victoria on 10-10-15.
- */
+
 public class TutorialActivity extends Activity {
 
     @Override
@@ -17,7 +15,6 @@ public class TutorialActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
     }
 
     @Override

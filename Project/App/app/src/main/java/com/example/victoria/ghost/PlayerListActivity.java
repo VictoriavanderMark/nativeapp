@@ -40,7 +40,7 @@ public class PlayerListActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_player);
+        setContentView(R.layout.activity_player_list);
 
         delete = (ImageButton) findViewById(R.id.delete);
         choose = (ImageButton) findViewById(R.id.choose);
@@ -116,7 +116,7 @@ public class PlayerListActivity extends Activity{
     public void readNames(){
 
         try {
-            FileInputStream fis = openFileInput("leaderboard.txt");
+            FileInputStream fis = openFileInput(getResources().getString(R.string.leaderboard_sourcefile));
             ObjectInputStream ois = new ObjectInputStream(fis);
             players = (ArrayList<Player>) ois.readObject();
             names = new ArrayList<String>();
@@ -148,7 +148,7 @@ public class PlayerListActivity extends Activity{
         nameList.setAdapter(adapter);
 
         try {
-            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(getResources().getString(R.string.leaderboard_sourcefile), Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(players);
             oos.close();

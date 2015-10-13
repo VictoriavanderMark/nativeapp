@@ -27,17 +27,15 @@ public class GameActivity extends Activity{
 
     private Lexicon lexicon;
     private Game game;
-    private EditText letterGuesser;
-    private String entered;
+    private EditText letterInput;
+    private String wordSoFar;
     private TextView P1;
     private TextView P2;
     private String P1name;
     private String P2name;
-    private String sourceFile;
-    private int MIN_OPACITY_P1 = 70;
-    private int MIN_OPACITY_P2 = 50;
-    private int MAX_OPACITY_P1 = 255;
-    private int MAX_OPACITY_P2 = 255;
+    private String lexiconSource;
+    private int MIN_OPACITY_VIEWS = 70;
+    private int MAX_OPACITY_VIEWS = 255;
     private String MIN_OPACITY_TEXT = "#A39898";
     private String MAX_OPACITY_TEXT = "#000000";
 
@@ -46,38 +44,10 @@ public class GameActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
-        sourceFile = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
-        System.out.println("SOURCEFILE: " + sourceFile);
-        lexicon = new Lexicon(this,sourceFile);
-        System.out.println(lexicon.getSize());
-        game = new Game(lexicon);
-        entered = "";
+        setContentView(R.layout.activity_game);
 
-        initialiseLayout();
-
-
-
-        letterGuesser = (EditText) findViewById(R.id.guesser);
-        letterGuesser.requestFocus();
-        if(letterGuesser.requestFocus()) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-        letterGuesser.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)) {
-                    String letter = letterGuesser.getText().toString();
-                    System.out.println("DIT TYP JE JAJAJ " + letter);
-                    entered = entered + letter;
-
-                    play(letter);
-                    return true;
-                }
-                return false;
-            }
-        });
+        setUpGame();
+        setInitialLayout();
 
     }
 
@@ -104,56 +74,66 @@ public class GameActivity extends Activity{
     }
 
     @Override
-    public void onOptionsMenuClosed(Menu menu) {
-        System.out.println(sourceFile);
-        System.out.println(PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, ""));
-                Toast.makeText(getApplicationContext(), "Changes will be effective after restarting the game",
-                        Toast.LENGTH_LONG).show(); //TODO werkt niet
-    }
-
-
-    @Override
     public void onBackPressed() {
         resetOpacity();
         finish();
     }
 
-    public void changeLanguage(String newLanguage) {
-        sourceFile = newLanguage;
-        lexicon = new Lexicon(this, sourceFile);
-        reset();
-
+    public void setUpGame() {
+        lexiconSource = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
+        lexicon = new Lexicon(this,lexiconSource);
+        game = new Game(lexicon);
+        wordSoFar = "";
+        setUpLetterInput();
     }
 
-    public void play(String g) {
-        if(g.length()>0) {
-            printTurn();
+    public void setUpLetterInput() {
+        letterInput = (EditText) findViewById(R.id.guesser);
+        letterInput.requestFocus();
 
-            game.guess(g);
-            if(game.ended()){
-                String winner = getWinner();
-                String loser;
-                if(winner.equals(P1name)) {
-                    loser = P2name;
-                } else {
-                    loser = P1name;
-                }
-                freeze(winner, loser);
-
-            } else {
-                showWord();
-                letterGuesser.setText("");
-                setOpacity();
-            }
+        if(letterInput.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
 
+        setLetterInputListener();
     }
 
-    public void initialiseLayout() {
+    public void setLetterInputListener() {
+        letterInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (i == KeyEvent.KEYCODE_ENTER)) {
+                    String enteredLetter = letterInput.getText().toString();
+                    wordSoFar = wordSoFar + enteredLetter;
+                    enterLetter(enteredLetter);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+    }
+
+    public void setInitialLayout () {
         P1 = (TextView) findViewById(R.id.P1);
         P2 = (TextView) findViewById(R.id.P2);
-        setOpacity(true);
+        updateOpacity();
         setPlayerNames();
+    }
+
+    public void updateOpacity() {
+        if(game.turn()) {
+            P1.getBackground().setAlpha(MAX_OPACITY_VIEWS);
+            P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+            P2.getBackground().setAlpha(MIN_OPACITY_VIEWS);
+            P2.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
+        } else {
+            P2.getBackground().setAlpha(MAX_OPACITY_VIEWS);
+            P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+            P1.getBackground().setAlpha(MIN_OPACITY_VIEWS);
+            P1.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
+        }
     }
 
     public void setPlayerNames() {
@@ -162,78 +142,27 @@ public class GameActivity extends Activity{
         P2name = startNewGameIntent.getExtras().getString("P2name");
         ((  (TextView) findViewById(R.id.P1))).setText(P1name);
         ((  (TextView) findViewById(R.id.P2))).setText(P2name);
-
-
     }
 
-    public void showWord() {
+    public void enterLetter(String enteredLetter) {
+        if(enteredLetter.length() > 0) {
+            game.guess(enteredLetter);
 
-        TextView word = (TextView) findViewById(R.id.word);
-        String wordText = word.getText().toString();
-        for(int i = 0; i< entered.length(); i++) {
-            word.setText(wordText + "  " + entered.charAt(i));
-        }
+            if(game.ended()){
+                String winner = getWinner();
+                String loser = winner.equals(P1name) ? P2name : P1name;
+                showGameResult(winner, loser);
 
-    }
-
-    public void resetText() {
-        TextView word = (TextView) findViewById(R.id.word);
-        word.setText(entered);
-        letterGuesser.setText("");
-
-    }
-
-    public void setOpacity(Boolean P1turn) {
-        if(P1turn) {
-            P2.getBackground().setAlpha(MIN_OPACITY_P2);
-            P2.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
-            P1.getBackground().setAlpha(MAX_OPACITY_P1);
-            P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
-        } else {
-            P2.getBackground().setAlpha(MAX_OPACITY_P2);
-            P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
-            P1.getBackground().setAlpha(MIN_OPACITY_P1);
-            P1.setTextColor(Color.parseColor(MIN_OPACITY_TEXT));
-        }
-    }
-
-    public void setOpacity() {
-        setOpacity(game.turn());
-    }
-
-
-    public void updateScore(String winner) {
-        try {
-            FileInputStream fis = openFileInput("leaderboard.txt");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ArrayList<Player> players= (ArrayList<Player>) ois.readObject();
-            for (Player p : players) {
-                if(p.getName().equals(winner)) {
-                    p.updateScore();
-                    break;
-                }
+            } else {
+                letterInput.setText("");
+                showWord();
+                updateOpacity();
             }
-            ois.close();
-
-            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(players);
-            oos.close();
-
-
-        } catch(IOException e){
-            e.printStackTrace();
-        } catch(ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
 
-    public void freeze(String winner, String loser) {
-        updateScore(winner);
+    public void showGameResult(String winner, String loser) {
         Intent gameWonIntent = new Intent(this, WinningActivity.class );
-
-
         int numPossible = game.getNumPossible();
         String reason;
         if(numPossible == 0) {
@@ -242,31 +171,41 @@ public class GameActivity extends Activity{
             reason = "an existing word";
         }
 
-        gameWonIntent.putExtra("Word", entered);
+        gameWonIntent.putExtra("WordSpelled", wordSoFar);
         gameWonIntent.putExtra("Winner", winner );
         gameWonIntent.putExtra("Loser", loser);
-        gameWonIntent.putExtra("Reason", reason);
+        gameWonIntent.putExtra("ReasonWon", reason);
         startActivity(gameWonIntent);
         resetOpacity();
         finish();
     }
 
+    public void showWord() {
+
+        TextView word = (TextView) findViewById(R.id.word);
+        String wordText = word.getText().toString();
+        for(int i = 0; i< wordSoFar.length(); i++) {
+            word.setText(wordText + "  " + wordSoFar.charAt(i));
+        }
+
+    }
+
+
+
+
+
+
+
+
     public void resetOpacity() {
-        P1.getBackground().setAlpha(MAX_OPACITY_P1);
-        P2.getBackground().setAlpha(MAX_OPACITY_P2);
+        P1.getBackground().setAlpha(MAX_OPACITY_VIEWS);
+        P2.getBackground().setAlpha(MAX_OPACITY_VIEWS);
         P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
         P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
 
 
     }
-    public void printTurn() {
-        Boolean turn = game.turn();
-        if (turn) {
-            System.out.println("It's P1's turn");
-        } else {
-            System.out.println("It's P2's turn");
-        }
-    }
+
 
     public String getWinner() {
         Boolean winner = game.winner();
@@ -282,23 +221,34 @@ public class GameActivity extends Activity{
         return winnerName;
     }
 
-    public void reset() {
-        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
-        if(!(sourceFile.equals(newLanguage))) {
-            sourceFile =  PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
-            lexicon = new Lexicon(this, sourceFile);
-        } else {
-            lexicon.reset();
-        }
-        game = new Game(lexicon);
-        setOpacity();
-        entered = "";
-        resetText();
-        letterGuesser.requestFocus();
-        if(letterGuesser.requestFocus()) {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
+
+
+//
+//    public void reset() {
+//        String newLanguage = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
+//        if(!(lexiconSource.equals(newLanguage))) {
+//            lexiconSource =  PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
+//            lexicon = new Lexicon(this, lexiconSource);
+//        } else {
+//            lexicon.reset();
+//        }
+//        game = new Game(lexicon);
+//        setOpacity();
+//        wordSoFar = "";
+//        resetText();
+//        letterInput.requestFocus();
+//        if(letterInput.requestFocus()) {
+//            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//        }
+////    }
+
+//    public void resetText() {
+//        TextView word = (TextView) findViewById(R.id.word);
+//        word.setText(wordSoFar);
+//        letterInput.setText("");
+//
+//    }
+
 
 
 }

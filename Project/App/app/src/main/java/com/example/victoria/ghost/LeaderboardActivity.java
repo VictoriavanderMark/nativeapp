@@ -41,7 +41,7 @@ public class LeaderboardActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_player);
+        setContentView(R.layout.activity_player_list);
 
         delete = (ImageButton) findViewById(R.id.delete);
 
@@ -112,7 +112,7 @@ public class LeaderboardActivity extends Activity{
 
     public void readNames(){
         try {
-            FileInputStream fis = openFileInput("leaderboard.txt");
+            FileInputStream fis = openFileInput(getResources().getString(R.string.leaderboard_sourcefile));
             ObjectInputStream ois = new ObjectInputStream(fis);
             players = (ArrayList<Player>) ois.readObject();
             names = new ArrayList<String>();
@@ -151,7 +151,7 @@ public class LeaderboardActivity extends Activity{
 
 
         try {
-            FileOutputStream fos = openFileOutput("leaderboard.txt", Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(getResources().getString(R.string.leaderboard_sourcefile), Context.MODE_PRIVATE);
             System.out.println("geschreven");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(players);
