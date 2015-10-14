@@ -35,5 +35,5 @@ public class Game {
         return false;
     }
 
-    public boolean winner() { return P1turn; }
+    public boolean P1winner() { return P1turn; }
 }

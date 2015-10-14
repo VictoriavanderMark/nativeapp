@@ -10,14 +10,16 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="@drawable/p1name_template"
         android:textSize="9pt"
         android:textColor="#000000"
-        android:id="@+id/P1"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:background="@drawable/p1name_template"
+        android:id="@+id/P1"
+
+    />
 
     <TextView
         android:layout_width="300dp"

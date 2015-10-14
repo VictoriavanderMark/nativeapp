@@ -25,7 +25,6 @@ public class WinningActivity extends Activity{
     private String wordSpelled;
     private String reasonWon;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,30 +42,41 @@ public class WinningActivity extends Activity{
     }
 
     public void updateScore() {
-        try {
-            FileInputStream fis = openFileInput(getResources().getString(R.string.leaderboard_sourcefile));
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            ArrayList<Player> players= (ArrayList<Player>) ois.readObject();
+            String leaderboardSourcefile = getResources().getString(R.string.leaderboard_sourcefile);
+            ArrayList<Player> players = readPlayers(leaderboardSourcefile);
             for (Player p : players) {
                 if(p.getName().equals(winnerName)) {
                     p.updateScore();
                     break;
                 }
             }
+            savePlayers(players, leaderboardSourcefile);
+    }
+
+    public ArrayList<Player> readPlayers(String leaderboardSourcefile) {
+        try {
+            FileInputStream fis = openFileInput(leaderboardSourcefile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList<Player> players = (ArrayList<Player>) ois.readObject();
             ois.close();
-
-            FileOutputStream fos = openFileOutput(getResources().getString(R.string.leaderboard_sourcefile), Context.MODE_PRIVATE);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(players);
-            oos.close();
-
-
-        } catch(IOException e){
+            return  players;
+        } catch(IOException e) {
             e.printStackTrace();
         } catch(ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return new ArrayList<Player>();
+    }
 
+    public void savePlayers(ArrayList<Player> players, String leaderboardSourcefile) {
+        try {
+            FileOutputStream fos = openFileOutput(leaderboardSourcefile, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(players);
+            oos.close();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getIntentInfo() {

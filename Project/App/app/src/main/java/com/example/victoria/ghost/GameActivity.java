@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class GameActivity extends Activity{
 
-    private Lexicon lexicon;
     private Game game;
     private EditText letterInput;
     private String wordSoFar;
@@ -33,7 +32,6 @@ public class GameActivity extends Activity{
     private TextView P2;
     private String P1name;
     private String P2name;
-    private String lexiconSource;
     private int MIN_OPACITY_VIEWS = 70;
     private int MAX_OPACITY_VIEWS = 255;
     private String MIN_OPACITY_TEXT = "#A39898";
@@ -80,8 +78,8 @@ public class GameActivity extends Activity{
     }
 
     public void setUpGame() {
-        lexiconSource = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
-        lexicon = new Lexicon(this,lexiconSource);
+        String lexiconSource = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
+        Lexicon lexicon = new Lexicon(this,lexiconSource);
         game = new Game(lexicon);
         wordSoFar = "";
         setUpLetterInput();
@@ -136,6 +134,13 @@ public class GameActivity extends Activity{
         }
     }
 
+    public void resetOpacity() {
+        P1.getBackground().setAlpha(MAX_OPACITY_VIEWS);
+        P2.getBackground().setAlpha(MAX_OPACITY_VIEWS);
+        P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+        P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
+    }
+
     public void setPlayerNames() {
         Intent startNewGameIntent = getIntent();
         P1name = startNewGameIntent.getExtras().getString("P1name");
@@ -149,7 +154,7 @@ public class GameActivity extends Activity{
             game.guess(enteredLetter);
 
             if(game.ended()){
-                String winner = getWinner();
+                String winner = getWinnerName();
                 String loser = winner.equals(P1name) ? P2name : P1name;
                 showGameResult(winner, loser);
 
@@ -161,64 +166,32 @@ public class GameActivity extends Activity{
         }
     }
 
-    public void showGameResult(String winner, String loser) {
-        Intent gameWonIntent = new Intent(this, WinningActivity.class );
-        int numPossible = game.getNumPossible();
-        String reason;
-        if(numPossible == 0) {
-            reason = "gibberish";
-        } else {
-            reason = "an existing word";
-        }
+    public String getWinnerName() {
+        Boolean P1winner = game.P1winner();
+        return P1winner ? P1name : P2name;
+    }
 
-        gameWonIntent.putExtra("WordSpelled", wordSoFar);
-        gameWonIntent.putExtra("Winner", winner );
+    public void showGameResult(String winner, String loser) {
+        int numPossible = game.getNumPossible();
+        String reason = numPossible == 0 ? "gibberish" : "an existing word";
+
+        Intent gameWonIntent = new Intent(this, WinningActivity.class );
         gameWonIntent.putExtra("Loser", loser);
+        gameWonIntent.putExtra("Winner", winner );
         gameWonIntent.putExtra("ReasonWon", reason);
+        gameWonIntent.putExtra("WordSpelled", wordSoFar);
+
         startActivity(gameWonIntent);
         resetOpacity();
         finish();
     }
 
     public void showWord() {
-
-        TextView word = (TextView) findViewById(R.id.word);
-        String wordText = word.getText().toString();
+        TextView wordView = (TextView) findViewById(R.id.word);
+        String wordText = wordView.getText().toString();
         for(int i = 0; i< wordSoFar.length(); i++) {
-            word.setText(wordText + "  " + wordSoFar.charAt(i));
+            wordView.setText(wordText + "  " + wordSoFar.charAt(i));
         }
-
-    }
-
-
-
-
-
-
-
-
-    public void resetOpacity() {
-        P1.getBackground().setAlpha(MAX_OPACITY_VIEWS);
-        P2.getBackground().setAlpha(MAX_OPACITY_VIEWS);
-        P1.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
-        P2.setTextColor(Color.parseColor(MAX_OPACITY_TEXT));
-
-
-    }
-
-
-    public String getWinner() {
-        Boolean winner = game.winner();
-        String winnerName;
-        if (winner) {
-            winnerName = P1name;
-
-        } else {
-            winnerName = P2name;
-
-        }
-
-        return winnerName;
     }
 
 
