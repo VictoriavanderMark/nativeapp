@@ -24,14 +24,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-/**
- * Created by victoria on 5-10-15.
- */
 public class PlayerListActivity extends Activity{
 
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<Player> players = new ArrayList<Player>();
-    private String selected;
+    private String selectedPlayer;
     private int selectedPos;
     private ImageButton delete;
     private ImageButton choose;
@@ -48,14 +45,14 @@ public class PlayerListActivity extends Activity{
         final ListView nameView = (ListView) findViewById(R.id.nameview);
         readNames();
 
-        selected = "";
+        selectedPlayer = "";
 
         nameView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                if (selected.equals(names.get(pos))) {
+                if (selectedPlayer.equals(names.get(pos))) {
                     unselectName(pos, nameView);
-                } else if (selected.length()>0) {
+                } else if (selectedPlayer.length()>0) {
                     unselect(nameView);
                     selectName(pos, nameView);
 
@@ -91,7 +88,7 @@ public class PlayerListActivity extends Activity{
 
 
     public void selectName(int pos, ListView nameView) {
-        selected = names.get(pos);
+        selectedPlayer = names.get(pos);
         selectedPos = pos;
         nameView.getChildAt(pos).setBackgroundColor(Color.rgb(189, 189, 189));
         delete.setVisibility(View.VISIBLE);
@@ -99,7 +96,7 @@ public class PlayerListActivity extends Activity{
     }
 
     public void unselectName(int pos, ListView nameView) {
-        selected = "";
+        selectedPlayer = "";
         nameView.getChildAt(pos).setBackgroundColor(Color.TRANSPARENT);
         delete.setVisibility(View.INVISIBLE);
         choose.setVisibility(View.INVISIBLE);
@@ -107,7 +104,7 @@ public class PlayerListActivity extends Activity{
 
     public void unselect(ListView nameView) {
         nameView.getChildAt(selectedPos).setBackgroundColor(Color.TRANSPARENT);
-        selected = "";
+        selectedPlayer = "";
         selectedPos = -1;
         delete.setVisibility(View.INVISIBLE);
         choose.setVisibility(View.INVISIBLE);
@@ -199,23 +196,23 @@ public class PlayerListActivity extends Activity{
     }
 
     public void removeName(View v) {
-        names.remove(selected);
+        names.remove(selectedPlayer);
         // remove from players array
         for(Player p:players) {
-            if(p.getName().equals(selected)) {
+            if(p.getName().equals(selectedPlayer)) {
                 players.remove(p);
                 break;
             }
         }
         updateNames();
-        selected = "";
+        selectedPlayer = "";
         delete.setVisibility(View.INVISIBLE);
         choose.setVisibility(View.INVISIBLE);
     }
 
     public void choosePlayer(View v) {
         Intent playerChosenIntent = new Intent(this, ChoosePlayersActivity.class);
-        playerChosenIntent.putExtra("Name", selected);
+        playerChosenIntent.putExtra("Name", selectedPlayer);
         setResult(RESULT_OK, playerChosenIntent);
         finish();
 

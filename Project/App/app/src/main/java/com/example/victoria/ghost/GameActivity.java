@@ -40,7 +40,6 @@ public class GameActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
@@ -187,10 +186,10 @@ public class GameActivity extends Activity{
     }
 
     public void showWord() {
-        TextView wordView = (TextView) findViewById(R.id.word);
-        String wordText = wordView.getText().toString();
+        TextView wordSoFarView = (TextView) findViewById(R.id.wordSoFar);
+        String wordText = wordSoFarView.getText().toString();
         for(int i = 0; i< wordSoFar.length(); i++) {
-            wordView.setText(wordText + "  " + wordSoFar.charAt(i));
+            wordSoFarView.setText(wordText + "  " + wordSoFar.charAt(i));
         }
     }
 

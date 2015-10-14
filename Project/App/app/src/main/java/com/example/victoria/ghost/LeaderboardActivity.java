@@ -25,13 +25,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-/**
- * Created by victoria on 5-10-15.
- */
-public class LeaderboardActivity extends Activity{
+public class LeaderboardActivity extends BaseActivity {
+
     private ArrayList<Player> players = new ArrayList<Player>();
     private ArrayList<String> names = new ArrayList<String>();
-    private String selected;
+    private String selectedPlayer;
     private int selectedPos;
     private ImageButton delete;
     private ArrayAdapter<String> nameAdapter;
@@ -43,19 +41,27 @@ public class LeaderboardActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_list);
 
+        initialiseLayout();
+
+        readNames();
+
+        selectedPlayer = "";
+
+
+
+
+    }
+
+    public void initialiseLayout() {
         delete = (ImageButton) findViewById(R.id.delete);
 
         final ListView nameView = (ListView) findViewById(R.id.nameview);
-        readNames();
-
-        selected = "";
-
         nameView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                if (selected.equals(names.get(pos))) {
+                if (selectedPlayer.equals(names.get(pos))) {
                     unselectName(pos, nameView);
-                } else if (selected.length()>0) {
+                } else if (selectedPlayer.length()>0) {
                     unselect(nameView);
                     selectName(pos, nameView);
 
@@ -64,8 +70,6 @@ public class LeaderboardActivity extends Activity{
                 }
             }
         });
-
-
     }
 
     @Override
@@ -91,21 +95,21 @@ public class LeaderboardActivity extends Activity{
 
 
     public void selectName(int pos, ListView nameView) {
-        selected = names.get(pos);
+        selectedPlayer = names.get(pos);
         selectedPos = pos;
         nameView.getChildAt(pos).setBackgroundColor(Color.rgb(189, 189, 189));
         delete.setVisibility(View.VISIBLE);
     }
 
     public void unselectName(int pos, ListView nameView) {
-        selected = "";
+        selectedPlayer = "";
         nameView.getChildAt(pos).setBackgroundColor(Color.TRANSPARENT);
         delete.setVisibility(View.INVISIBLE);
     }
 
     public void unselect(ListView nameView) {
         nameView.getChildAt(selectedPos).setBackgroundColor(Color.TRANSPARENT);
-        selected = "";
+        selectedPlayer = "";
         selectedPos = -1;
         delete.setVisibility(View.INVISIBLE);
     }
@@ -200,16 +204,16 @@ public class LeaderboardActivity extends Activity{
     }
 
     public void removeName(View v) {
-        names.remove(selected);
+        names.remove(selectedPlayer);
         // remove from players array
         for(Player p:players) {
-            if(p.getName().equals(selected)) {
+            if(p.getName().equals(selectedPlayer)) {
                 players.remove(p);
                 break;
             }
         }
         updateNames();
-        selected = "";
+        selectedPlayer = "";
         delete.setVisibility(View.INVISIBLE);
     }
 

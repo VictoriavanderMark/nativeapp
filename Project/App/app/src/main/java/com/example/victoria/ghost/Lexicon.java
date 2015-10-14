@@ -14,109 +14,67 @@ import java.util.Set;
 public class Lexicon {
 
     private Set<String> lexicon = new HashSet<String>();
-
     private Set<String> filtered = new HashSet<String>();
-    private String currentGuess;
-    private String resultWord;
+    private String lastGuess;
 
-    Lexicon(Context context, String sourcePath ) {
-        this.currentGuess = "";
+    Lexicon(Context context, String sourcePath) {
+        getWords(context, sourcePath);
+        this.lastGuess = "";
+    }
 
+    public void getWords(Context context, String sourcePath) {
         try {
-            InputStream words = context.getApplicationContext().getAssets().open(sourcePath);
-            getWords(words);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
+            InputStream is = context.getApplicationContext().getAssets().open(sourcePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            String lastAddedWord = "none";
 
-
-    public Set<String> getFiltered() {
-        return this.filtered;
-    }
-
-    public int getSize() {
-        return lexicon.size();
-    }
-
-    public void getWords(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        String line;
-        String lastWord = "potato";
-        try {
-            while((line = reader.readLine()) != null) {
-                if(line.length()>3 & !(line.startsWith(lastWord))) {
-                    lexicon.add(line);
-                    lastWord = line;
-
+                while((line = reader.readLine()) != null) {
+                    if(line.length() > 3 & !(line.startsWith(lastAddedWord))) {
+                        lexicon.add(line);
+                        lastAddedWord = line;
+                    }
                 }
-            }
-
-
-
-
-
-
 
         } catch(IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String getLastGuess() {
-        return currentGuess;
+    public int count() { return filtered.size(); }
 
-    }
+    public String getLastGuess() { return lastGuess; }
 
-    public void filter(String input) {
-        currentGuess = input;
+    public Set<String> getFiltered() { return this.filtered; }
 
 
+    public void filter(String guessedWord) {
+        lastGuess = guessedWord;
 
-        if( filtered.size()==0) {
-            for (String l : lexicon) {
-                if (l.startsWith(input.toLowerCase())) {
-                    filtered.add(l);
-                }
-            }
+        if(filtered.size() == 0) {
+            fillFilterFirstTime();
         } else {
-            Set<String> temp = new HashSet<String>();
-            for(String f: filtered) {
-                temp.add(f);
-            }
-
-
-            for (String t : temp) {
-                if (!(t.startsWith(input.toLowerCase()))) {
-                    filtered.remove(t);
-                }
-            }
-
-
+            fillFilter();
         }
-
     }
 
-    public void setResultWord(String result) {
-        resultWord = result;
+    public void fillFilterFirstTime() {
+        for (String l : lexicon) {
+            if (l.startsWith(lastGuess.toLowerCase())) {
+                filtered.add(l);
+            }
+        }
     }
 
-    public int count() {
-        int numWords = filtered.size();
-        return  numWords;
-
+    public void fillFilter() {
+        Set<String> temp = new HashSet<String>();
+        for(String f: filtered) {
+            temp.add(f);
+        }
+        for (String t : temp) {
+            if (!(t.startsWith(lastGuess.toLowerCase()))) {
+                filtered.remove(t);
+            }
+        }
     }
-
-    public String result() {
-        return resultWord;
-    }
-
-    public void reset() {
-
-        filtered = new HashSet<String>();
-        currentGuess = "";
-        resultWord = "";
-
-    }
-
 }

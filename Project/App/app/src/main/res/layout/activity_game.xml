@@ -10,64 +10,55 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:textSize="9pt"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
-        android:gravity="center"
         android:background="@drawable/p1name_template"
-        android:id="@+id/P1"
-
-    />
+        android:id="@+id/P1"/>
 
     <TextView
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="@drawable/p2name_template"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:textSize="9pt"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:id="@+id/P2"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:gravity="center"/>
+        android:background="@drawable/p2name_template"
+        android:id="@+id/P2"/>
 
 
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text=""
-            android:id="@+id/word"
             android:gravity="bottom|right"
-
+            android:text=""
             android:textSize="10pt"
-
-            />
+            android:id="@+id/wordSoFar"/>
 
         <EditText
             android:layout_width="20dp"
             android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:id="@+id/guesser"
             android:layout_marginTop="4dp"
             android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/wordSoFar"
+            android:layout_gravity="center"
             android:textSize="10pt"
             android:textStyle="normal"
-            android:layout_toRightOf="@+id/word"
             android:maxLength="1"
             android:background="@drawable/edittext_style"
-            />
+            android:id="@+id/guesser"/>
 
     </RelativeLayout>
-
-
 
 </LinearLayout>

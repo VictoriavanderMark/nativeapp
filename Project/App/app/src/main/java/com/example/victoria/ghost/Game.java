@@ -2,14 +2,14 @@ package com.example.victoria.ghost;
 
 public class Game {
 
-    private Lexicon lexicon;
     private String guessedWord;
+    private Lexicon lexicon;
     private boolean P1turn;
 
     Game(Lexicon lexicon) {
-        this.lexicon = lexicon;
-        guessedWord = "";
         P1turn = true;
+        guessedWord = "";
+        this.lexicon = lexicon;
     }
 
     public void guess(String guessedLetter) {
@@ -29,7 +29,6 @@ public class Game {
     public boolean ended() {
             int numPossible = getNumPossible();
             if (numPossible == 0 || lexicon.getFiltered().contains(guessedWord.toLowerCase())) {
-                lexicon.setResultWord(guessedWord);
                 return true;
             }
         return false;
