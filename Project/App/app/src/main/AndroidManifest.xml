@@ -44,7 +44,7 @@
             android:label="Tutorial">
 
         </activity>
-        <activity android:name=".NameListAbstractActivity"></activity>
+        <activity android:name=".NameListActivity"></activity>
     </application>
 
 </manifest>

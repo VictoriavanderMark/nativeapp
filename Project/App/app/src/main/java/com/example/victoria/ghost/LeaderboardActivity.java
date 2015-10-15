@@ -3,18 +3,18 @@ package com.example.victoria.ghost;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class LeaderboardActivity extends NameListAbstractActivity {
+public class LeaderboardActivity extends NameListActivity {
 
     public void initialiseButtons() {
-        delete = (ImageButton) findViewById(R.id.delete);
+        delete_button = (ImageButton) findViewById(R.id.delete);
 
     }
     public void showButtons() {
-        delete.setVisibility(View.VISIBLE);
+        delete_button.setVisibility(View.VISIBLE);
     }
 
     public void hideButtons() {
-        delete.setVisibility(View.INVISIBLE);
+        delete_button.setVisibility(View.INVISIBLE);
 
     }
 

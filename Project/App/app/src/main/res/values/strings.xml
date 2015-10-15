@@ -12,6 +12,11 @@
     <string name="select_players">Select the players</string>
     <string name="won">Game over!</string>
 
+    <!-- NameList-->
+    <string name="no_name_entered">Please enter a name</string>
+    <string name="existing_name_entered">Already Exists!</string>
+
+
     <!-- Choose Players text-->
     <string name="choose_p1_text">Choose Player 1</string>
     <string name="choose_p2_text">Choose Player 2</string>
