@@ -1,3 +1,12 @@
+/*
+ *      Project: Ghost
+ *      File: NameListActivity.java
+ *      Date: 16 October 2015
+ *
+ *      Author: Victoria van der Mark
+ *      StudentNo: 10549544
+ */
+
 package com.example.victoria.ghost;
 
 import android.app.Activity;
@@ -16,7 +25,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,8 +32,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public abstract class NameListActivity extends Activity {
 
+/*
+ * The NameListActivity class creates a list, showing player names and their scores.
+ * Depending on the child that extends it, certain actions can be performed after selecting
+ * a player.
+ */
+public abstract class NameListActivity extends Activity {
 
     protected String selectedName;
     protected ImageButton delete_button;
@@ -34,8 +47,9 @@ public abstract class NameListActivity extends Activity {
     private ArrayList<String> playerNames = new ArrayList<String>();
     private ArrayList<Player> players = new ArrayList<Player>();
 
-
-
+    /*
+     * On creating, the stored names are retrieved and the initial layout is set.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +80,10 @@ public abstract class NameListActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /*
+     * The list of players is saved within the activity and the layout is updated
+     * accordingly
+     */
     private void readNames(){
         playerNames = new ArrayList<String>();
             players = getStoredPlayers();
@@ -77,6 +94,9 @@ public abstract class NameListActivity extends Activity {
             updateNames();
     }
 
+    /*
+     * Reads the players and their scores from the file storing the leaderboard.
+     */
     @SuppressWarnings("unchecked")
     private ArrayList<Player> getStoredPlayers() {
         try {
@@ -96,6 +116,11 @@ public abstract class NameListActivity extends Activity {
         return new ArrayList<Player>();
     }
 
+
+    /*
+     * After changes are made, the ListView is updated with the appertunant adapter and
+     * the modified set of players is saved.
+     */
     private void updateNames() {
         ListViewAdapter adapter = new ListViewAdapter(this, players);
         ListView nameList = (ListView) findViewById(R.id.nameview);
@@ -103,11 +128,13 @@ public abstract class NameListActivity extends Activity {
         storeModifiedPlayers();
     }
 
+    /*
+     * Saves the set of modified player to the given file.
+     */
     private void storeModifiedPlayers() {
         try {
             FileOutputStream fos = openFileOutput(
-                    getResources().getString(R.string.leaderboard_sourcefile),
-                    Context.MODE_PRIVATE);
+                    getResources().getString(R.string.leaderboard_sourcefile), Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(players);
             oos.close();
@@ -117,14 +144,26 @@ public abstract class NameListActivity extends Activity {
         }
     }
 
+    /*
+     * Defines the layout in which the Activity starts. When (un)selecting
+     * a player, this layout will be modified.
+     */
     protected void initialiseLayout() {
         selectedName = "";
         initialiseButtons();
         setListeners();
     }
 
+    /*
+     * Extra buttons can be set visibile, depending on the class that extends this
+     * Activity
+     */
     protected void initialiseButtons(){}
 
+    /*
+     * Sets the listeners for the items in the list. An item is selected when clicked on and
+     * deselected when clicked on again (or when another item is clicked)
+     */
     private void setListeners() {
         final ListView nameView = (ListView) findViewById(R.id.nameview);
         nameView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,9 +171,9 @@ public abstract class NameListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 if (selectedName.equals(playerNames.get(pos))) {
-                    unselectName(pos, nameView);
+                    unselect(pos, nameView);
                 } else if (selectedName.length() > 0) {
-                    unselectView(nameView);
+                    unselect(nameView);
                     selectName(pos, nameView);
                 } else {
                     selectName(pos, nameView);
@@ -143,19 +182,26 @@ public abstract class NameListActivity extends Activity {
         });
     }
 
-    private void unselectName(int pos, ListView nameView) {
+    /*
+     * Unselects the currently selected item within the listView
+     */
+    private void unselect(ListView nameView) {
+        positionSelected = -1;  // No position selected, value needed for comparisons
+        unselect(positionSelected, nameView);
+    }
+
+    /*
+     * Unselects a specific name within the listView
+     */
+    private void unselect(int pos, ListView nameView) {
         selectedName = "";
         nameView.getChildAt(pos).setBackgroundColor(Color.TRANSPARENT);
         hideButtons();
     }
 
-    private void unselectView(ListView nameView) {
-        nameView.getChildAt(positionSelected).setBackgroundColor(Color.TRANSPARENT);
-        selectedName = "";
-        positionSelected = -1;
-        hideButtons();
-    }
-
+    /*
+     * Selects a specific name within the listView
+     */
     private void selectName(int pos, ListView nameView) {
         selectedName = playerNames.get(pos);
         positionSelected = pos;
@@ -163,14 +209,27 @@ public abstract class NameListActivity extends Activity {
         showButtons();
     }
 
+    /*
+     * When selecting an item, buttons may be hidden depending on the class that extends
+     * the Activity
+     */
     protected void hideButtons(){}
 
+    /*
+     * When selecting an item, buttons may be hidden depending on the class that extends
+     * the Activity
+     */
     protected void showButtons(){}
 
+    /*
+     * When the button for adding a new player is clicked on, a dialog window appears,
+     * in which the user can enter the name of the player he wants to create.
+     */
     public void enterNewName(View v) {
         final EditText nameInput = new EditText(this);
         nameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         builder.setView(nameInput)
                 .setMessage(R.string.enter_player)
                 .setPositiveButton(R.string.create_player, new DialogInterface.OnClickListener() {
@@ -187,6 +246,10 @@ public abstract class NameListActivity extends Activity {
         builder.show();
     }
 
+    /*
+     * When the name of a new player is entered, it is only accepted if the name doesn't exist
+     * yet, and contains a minimum of one letters.
+     */
     private void processEnteredName(EditText nameInput) {
         String addedName = nameInput.getText().toString().toUpperCase();
 
@@ -199,6 +262,17 @@ public abstract class NameListActivity extends Activity {
         }
     }
 
+    /*
+     * Shows a toast containing a given text.
+     */
+    private void showToast(String text) {
+        Toast.makeText(getApplicationContext(), text,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    /*
+     * Adds a player to the game and the stored set of existing players.
+     */
     private void createPlayer(String addedName) {
         Player newPlayer = new Player(addedName);
         players.add(newPlayer);
@@ -206,11 +280,9 @@ public abstract class NameListActivity extends Activity {
         updateNames();
     }
 
-    private void showToast(String text) {
-        Toast.makeText(getApplicationContext(), text,
-                Toast.LENGTH_SHORT).show();
-    }
-
+    /*
+     * Removes a player from the game and the stored set of existing players.
+     */
     public void removeName(View v) {
         hideButtons();
         playerNames.remove(selectedName);

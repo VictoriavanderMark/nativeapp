@@ -1,3 +1,11 @@
+/*
+ *      Project: Ghost
+ *      File: ChoosePlayersActivity.java
+ *      Date: 16 October 2015
+ *
+ *      Author: Victoria van der Mark
+ *      StudentNo: 10549544
+ */
 package com.example.victoria.ghost;
 
 import android.app.Activity;
@@ -11,13 +19,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/**
+ * The ChoosePlayersActivity lets the players enter their names (for which they are
+ * redirected to NameListActivity), after which they can start the game.
+ */
 public class ChoosePlayersActivity extends Activity{
 
     private String P1name;
     private String P2name;
+    private String chosenPlayer;
     private boolean P1chosen;
     private boolean P2chosen;
-    private String chosenPlayer;
     private View viewToChange;
     private Button startGameButton;
 
@@ -26,9 +39,8 @@ public class ChoosePlayersActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_players);
 
-        startGameButton = (Button) findViewById(R.id.start_game_button);
-
         //Disable the button until all players have been chosen
+        startGameButton = (Button) findViewById(R.id.start_game_button);
         startGameButton.getBackground().setAlpha(120);
         startGameButton.setTextColor(Color.parseColor("#7C7272"));
         startGameButton.setClickable(false);
@@ -55,6 +67,10 @@ public class ChoosePlayersActivity extends Activity{
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * On receiving results from a called activity (in this case only PlayerList Activity),
+     * the name of the chosen player is processed.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent playerChosenIntent) {
         if(playerChosenIntent != null) {
@@ -63,14 +79,22 @@ public class ChoosePlayersActivity extends Activity{
         }
     }
 
-    public void setName() {
+    /*
+     * Adjusts the name shown on screen, based on the chosen player in the PlayerList Activity
+     */
+    private void setName() {
         if (chosenPlayer.length() > 0) {
             ((TextView) viewToChange).setText(chosenPlayer);
             updateNames();
         }
     }
 
-    public void updateNames() {
+    /*
+     * When a player is picked, it's textView is marked as being 'chosen'. When both
+     * players have been chosen, the button for starting the game becomes clickable and
+     * the game may start.
+     */
+    private void updateNames() {
         P1name = ((Button) findViewById(R.id.choose_p1_button)).getText().toString();
         P2name = ((Button) findViewById(R.id.choose_p2_button)).getText().toString();
 
@@ -87,6 +111,10 @@ public class ChoosePlayersActivity extends Activity{
         }
     }
 
+    /*
+     * When clicking on a player's textView, the user is redirected to a list
+     * of all stored Players, where he may choose his own name.
+     */
     public void choosePlayer(View view) {
         chosenPlayer = "";
         viewToChange = view;
@@ -96,6 +124,8 @@ public class ChoosePlayersActivity extends Activity{
         startActivityForResult(showPlayerListIntent, result);
     }
 
+    /* After clicking on the button for starting the game, the names of the
+     * chosen players are stored and the Game Activity is called on*/
     public void playGame(View view) {
         if(!P1name.equals(P2name)) {
             startGameButton.setText(R.string.loading_game_text);
@@ -107,11 +137,10 @@ public class ChoosePlayersActivity extends Activity{
             startActivity(startNewGameIntent);
             finish();
 
+        // A player should not compete against himself
         } else {
-            Toast.makeText(getApplicationContext(), "Please choose two different players",
+            Toast.makeText(getApplicationContext(), getString(R.string.same_players_chosen),
                     Toast.LENGTH_SHORT).show();
         }
-
     }
-
 }

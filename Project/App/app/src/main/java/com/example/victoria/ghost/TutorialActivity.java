@@ -1,3 +1,13 @@
+/*
+ *      Project: Ghost
+ *      File: TutorialActivity.java
+ *      Date: 16 October 2015
+ *
+ *      Author: Victoria van der Mark
+ *      StudentNo: 10549544
+ */
+
+
 package com.example.victoria.ghost;
 
 import android.app.Activity;
@@ -8,6 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+/**
+ * The Tutorial Activity shows the instructions on how to play the game. The layout
+ * is defined within the appurtenant .XML-file
+ */
 public class TutorialActivity extends Activity {
 
     @Override
